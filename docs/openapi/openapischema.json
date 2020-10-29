@@ -1,0 +1,472 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "description": "Public Datastream API",
+    "title": "datastream-api-public",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "v1/odata/v4/Metadata": {
+      "get": {
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/GetMetadata"
+                  },
+                  "type": "String"
+                }
+              }
+            },
+            "description": "successful operation"
+          }
+        },
+        "tags": [
+          "Dataset"
+        ]
+      }
+    },
+    "v1/odata/v4/Locations": {
+      "get": {
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/GetLocations"
+                  },
+                  "type": "String"
+                }
+              }
+            },
+            "description": "successful operation"
+          }
+        },
+        "tags": [
+          "Location"
+        ]
+      }
+    },
+    "v1/odata/v4/Observations": {
+      "get": {
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/GetObservations"
+                  },
+                  "type": "String"
+                }
+              }
+            },
+            "description": "successful operation"
+          }
+        },
+        "tags": [
+          "Observation"
+        ]
+      }
+    },
+    "v1/odata/v4/Records": {
+      "get": {
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/GetRecords"
+                  },
+                  "type": "String"
+                }
+              }
+            },
+            "description": "successful operation"
+          }
+        },
+        "tags": [
+          "Record"
+        ]
+      }
+    },
+  },
+  "components": {
+    "schemas": {
+      "GetMetadata": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "Id": {
+                  "type": "string"
+                },
+                "Name": {
+                  "type": "string"
+                },
+                "Abstract": {
+                  "type": "string"
+                },
+                "Citation": {
+                  "type": "string"
+                },
+                "DataStewardEmail": {
+                  "type": "string"
+                },
+                "DataCollectionOrganization": {
+                  "type": "string"
+                },
+                "DataCollectionInformation": {
+                  "type": "string"
+                },
+                "DataProcessing": {
+                  "type": "string"
+                },
+                "DataUploadOrganization": {
+                  "type": "string"
+                },
+                "DataSources": {
+                  "type": "string"
+                },
+                "FundingSources": {
+                  "type": "string"
+                },
+                "Licence": {
+                  "type": "string"
+                },
+                "Disclaimer": {
+                  "type": "string"
+                },
+                "Doi": {
+                  "type": "string"
+                },
+                "TopicCategories": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "Keywords": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "Version": {
+                  "type": "string"
+                },
+                "CreateTimestamp": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "GetLocations": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "Id": {
+                  "type": "string"
+                },
+                "DatasetId": {
+                  "type": "string"
+                },
+                "NameId": {
+                  "type": "string"
+                },
+                "Name": {
+                  "type": "string"
+                },
+                "Latitude": {
+                  "type": "number"
+                },
+                "Longitude": {
+                  "type": "number"
+                },
+                "HorizontalCoordinateReferenceSystem": {
+                  "type": "string"
+                },
+                "LatitudeNormalized": {
+                  "type": "number"
+                },
+                "LongitudeNormalized": {
+                  "type": "number"
+                },
+                "HorizontalCoordinateReferenceSystemNormalized": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "GetObservations": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "Id": {
+                  "type": "integer"
+                },
+                "DatasetId": {
+                  "type": "string"
+                },
+                "LocationId": {
+                  "type": "integer"
+                },
+                "ActivityType": {
+                  "type": "string"
+                },
+                "ActivityMediaName": {
+                  "type": "string"
+                },
+                "ActivityStartDate": {
+                  "type": "string"
+                },
+                "ActivityStartTime": {
+                  "type": "string"
+                },
+                "ActivityEndDate": {
+                  "type": "string"
+                },
+                "ActivityEndTime": {
+                  "type": "string"
+                },
+                "ActivityDepthHeightMeasure": {
+                  "type": "number"
+                },
+                "ActivityDepthHeightUnit": {
+                  "type": "string"
+                },
+                "SampleCollectionEquipmentName": {
+                  "type": "string"
+                },
+                "CharacteristicName": {
+                  "type": "string"
+                },
+                "MethodSpeciation": {
+                  "type": "string"
+                },
+                "ResultSampleFraction": {
+                  "type": "string"
+                },
+                "ResultValue": {
+                  "type": "number"
+                },
+                "ResultUnit": {
+                  "type": "string"
+                },
+                "ResultValueType": {
+                  "type": "string"
+                },
+                "ResultDetectionCondition": {
+                  "type": "string"
+                },
+                "ResultDetectionQuantitationLimitUnit": {
+                  "type": "string"
+                },
+                "ResultDetectionQuantitationLimitMeasure": {
+                  "type": "number"
+                },
+                "ResultDetectionQuantitationLimitType": {
+                  "type": "string"
+                },
+                "ResultStatusId": {
+                  "type": "string"
+                },
+                "ResultComment": {
+                  "type": "string"
+                },
+                "ResultAnalyticalMethodId": {
+                  "type": "string"
+                },
+                "ResultAnalyticalMethodContext": {
+                  "type": "string"
+                },
+                "ResultAnalyticalMethodName": {
+                  "type": "string"
+                },
+                "AnalysisStartDate": {
+                  "type": "string"
+                },
+                "AnalysisStartTime": {
+                  "type": "string"
+                },
+                "AnalysisStartTimeZone": {
+                  "type": "string"
+                },
+                "LaboratoryName": {
+                  "type": "string"
+                },
+                "LaboratorySampleId": {
+                  "type": "string"
+                },
+                "ActivityDepthHeightMeasureNormalized": {
+                  "type": "number"
+                },
+                "ActivityDepthHeightUnitNormalized": {
+                  "type": "string"
+                },
+                "ResultValueNormalized": {
+                  "type": "number"
+                },
+                "ResultUnitNormalized": {
+                  "type": "string"
+                },
+                "ResultDetectionQuantitationLimitMeasureNormalized": {
+                  "type": "string"
+                },
+                "ResultDetectionQuantitationLimitUnitNormalized": {
+                  "type": "string"
+                },
+                "CreateTimestamp": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "GetRecords": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "Id": {
+                  "type": "integer"
+                },
+                "DatasetName": {
+                  "type": "string"
+                },
+                "MonitoringLocationID": {
+                  "type": "string"
+                },
+                "MonitoringLocationName": {
+                  "type": "string"
+                },
+                "MonitoringLocationLatitude": {
+                  "type": "number"
+                },
+                "MonitoringLocationLongitude": {
+                  "type": "number"
+                },
+                "MonitoringLocationHorizontalCoordinateReferenceSystem": {
+                  "type": "string"
+                },
+                "MonitoringLocationType": {
+                  "type": "string"
+                },
+                "ActivityType": {
+                  "type": "string"
+                },
+                "ActivityMediaName": {
+                  "type": "string"
+                },
+                "ActivityStartDate": {
+                  "type": "string"
+                },
+                "ActivityStartTime": {
+                  "type": "string"
+                },
+                "ActivityEndDate": {
+                  "type": "string"
+                },
+                "ActivityEndTime": {
+                  "type": "string"
+                },
+                "ActivityDepthHeightMeasure": {
+                  "type": "number"
+                },
+                "ActivityDepthHeightUnit": {
+                  "type": "string"
+                },
+                "SampleCollectionEquipmentName": {
+                  "type": "string"
+                },
+                "CharacteristicName": {
+                  "type": "string"
+                },
+                "MethodSpeciation": {
+                  "type": "string"
+                },
+                "ResultSampleFraction": {
+                  "type": "string"
+                },
+                "ResultValue": {
+                  "type": "number"
+                },
+                "ResultUnit": {
+                  "type": "string"
+                },
+                "ResultValueType": {
+                  "type": "string"
+                },
+                "ResultDetectionCondition": {
+                  "type": "string"
+                },
+                "ResultDetectionQuantitationLimitMeasure": {
+                  "type": "number"
+                },
+                "ResultDetectionQuantitationLimitUnit": {
+                  "type": "string"
+                },
+                "ResultDetectionQuantitationLimitType": {
+                  "type": "string"
+                },
+                "ResultStatusID": {
+                  "type": "string"
+                },
+                "ResultComment": {
+                  "type": "string"
+                },
+                "ResultAnalyticalMethodID": {
+                  "type": "string"
+                },
+                "ResultAnalyticalMethodContext": {
+                  "type": "string"
+                },
+                "ResultAnalyticalMethodName": {
+                  "type": "string"
+                },
+                "AnalysisStartDate": {
+                  "type": "string"
+                },
+                "AnalysisStartTime": {
+                  "type": "string"
+                },
+                "AnalysisStartTimeZone": {
+                  "type": "string"
+                },
+                "LaboratoryName": {
+                  "type": "string"
+                },
+                "LaboratorySampleID": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
