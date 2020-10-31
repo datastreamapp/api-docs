@@ -11,16 +11,17 @@
 
 Our public API uses the ISO/IEC 20802-2 Standard known as [OData JSON Format v4](https://odata.org).
 
-## R Module
-If you plan to pull from the API using `R`, checkout our [`R` package](https://github.com/gordonfn/datastreamr). Be sure to watch the repository for update notifications.
-
 ## Attribution/Citation
 Thank you ahead of time for using this data responsibly and providing the appropriate citations when necessary when being presented to external parties. These citations must be accompanied by a link to the DOI (https://doi.org/{value}). The licence, citation, and DOI can be retrieved from the `/Metadata` endpoint.
+
+## Modules
+### R
+If you plan to pull from the API using `R`, checkout our [`R` package](https://github.com/gordonfn/datastreamr). Be sure to watch the repository for update notifications.
 
 ## Endpoints
 You can test out your script by prefixing `https://qa-api.datastream.org/v1/odata/v4` to the endpoints.
 When you're ready to pull data from the production system you can use: `https://api.datastream.org/v1/odata/v4`.
-For browser requests you can use the query string, `apikey`, to pass in your API Key. All other application should store the API Key in the header `x-api-key`. 
+For browser requests all you need to do is let us know your domain name and we can add it to the CORS whitelist, only GET requests are supported. All other application should store the API Key in the header `x-api-key`. 
 
 Remember that your API key is for your use only. Please do not share your API key. If it does become public, please let us know, we can give you a new one.
 
@@ -28,7 +29,12 @@ Remember that your API key is for your use only. Please do not share your API ke
   - Select By: `Id`, `Name`, `Abstract`, `Citation`, `DataStewardEmail`, `DataCollectionOrganization`, `DataCollectionInformation`, `DataProcessing`, `DataUploadOrganization`, `DataSources`, `FundingSources`, `Licence`, `Disclaimer`, `Doi`, `TopicCategories`, `Keywords`, `Version`, `CreateTimestamp`
   - Filter By: `Id`, `Name`, `Doi`, `CreateTimestamp`, `RegionId`, `Latitude`, `Longitude`, `LatitudeNormalized`, `LongitudeNormalized`
   - Order By: `Name`, `CreateTimestamp`
-- **PATCH /Metadata (Future)**
+- **POST /Metadata (Future)**
+  - Type: `metadata`
+  - Body: `Name`, `Abstract`, `Citation`, `DataStewardEmail`, `DataCollectionOrganization`, `DataCollectionInformation`, `DataProcessing`, `DataUploadOrganization`, `DataSources`, `FundingSources`, `Licence`, `Disclaimer`, `Doi`, `TopicCategories`, `Keywords`
+- **PATCH /Metadata(DatasetId=@dataset_id)?@dataset_id= (Future)**
+  - Type: `metadata`
+  - Body: `Name`, `Abstract`, `Citation`, `DataStewardEmail`, `DataCollectionOrganization`, `DataCollectionInformation`, `DataProcessing`, `DataUploadOrganization`, `DataSources`, `FundingSources`, `Licence`, `Disclaimer`, `TopicCategories`, `Keywords`
 
 - **GET /Locations**
   - Select By: `Id`, `DatasetId`, `NameId`, `Name`, `Latitude`, `Longitude`, `HorizontalCoordinateReferenceSystem`, `LatitudeNormalized`\*, `LongitudeNormalized`\*, `HorizontalCoordinateReferenceSystemNormalized`*
@@ -36,6 +42,7 @@ Remember that your API key is for your use only. Please do not share your API ke
   - Order By: `Name`
 
   \* Normalized coordinates are in `WGS84` projection.
+
 - **GET /Observations**
   - Select By: `Id`, `DatasetId`, `LocationId`, `ActivityType`, `ActivityStartDate`, `ActivityStartTime`, `ActivityEndDate`, `ActivityEndTime`, `ActivityDepthHeightMeasure`, `ActivityDepthHeightUnit`, `SampleCollectionEquipmentName`, `CharacteristicName`, `MethodSpeciation`, `ResultSampleFraction`, `ResultValue`, `ResultUnit`, `ResultValueType`, `ResultDetectionCondition`, `ResultDetectionQuantitationLimitUnit`, `ResultDetectionQuantitationLimitMeasure`, `ResultDetectionQuantitationLimitType`, `ResultStatusId`, `ResultComment`, `ResultAnalyticalMethodId`, `ResultAnalyticalMethodContext`, `ResultAnalyticalMethodName`, `AnalysisStartDate`, `AnalysisStartTime`, `AnalysisStartTimeZone`, `LaboratoryName`, `LaboratorySampleId`, `ActivityDepthHeightMeasureNormalized`, `ActivityDepthHeightUnitNormalized`, `ResultValueNormalized`, `ResultUnitNormalized`, `ResultDetectionQuantitationLimitMeasureNormalized`, `ResultDetectionQuantitationLimitUnitNormalized`, `CreateTimestamp`
   - Filter By: `DatasetId`, `LocationId`, `Doi`, `ActivityStartDate`, `ActivityStartTime`, `ActivityType`, `CharacteristicName`, `MethodSpeciation`, `ResultSampleFraction`, `RegionId`, `LatitudeNormalized`, `LongitudeNormalized`
@@ -44,9 +51,23 @@ Remember that your API key is for your use only. Please do not share your API ke
   - Select By: `Id`, `DatasetName`, `MonitoringLocationID`, `MonitoringLocationName`, `MonitoringLocationLatitude`, `MonitoringLocationLongitude`, `MonitoringLocationHorizontalCoordinateReferenceSystem`, `MonitoringLocationType`, `ActivityType`, `ActivityMediaName`, `ActivityStartDate`, `ActivityStartTime`, `ActivityEndDate`, `ActivityEndTime`, `ActivityDepthHeightMeasure`, `ActivityDepthHeightUnit`, `SampleCollectionEquipmentName`, `CharacteristicName`, `MethodSpeciation`, `ResultSampleFraction`, `ResultValue`, `ResultUnit`, `ResultValueType`, `ResultDetectionCondition`, `ResultDetectionQuantitationLimitMeasure`, `ResultDetectionQuantitationLimitUnit`, `ResultDetectionQuantitationLimitType`, `ResultStatusID`, `ResultComment`, `ResultAnalyticalMethodID`, `ResultAnalyticalMethodContext`, `ResultAnalyticalMethodName`, `AnalysisStartDate`, `AnalysisStartTime`, `AnalysisStartTimeZone`, `LaboratoryName`, `LaboratorySampleID`
   - Filter By: `Id`, `DatasetName`, `MonitoringLocationID`, `MonitoringLocationName`, `MonitoringLocationLatitude`, `MonitoringLocationLongitude`, `MonitoringLocationHorizontalCoordinateReferenceSystem`, `MonitoringLocationType`, `ActivityType`, `ActivityMediaName`, `ActivityStartDate`, `ActivityStartTime`, `ActivityEndDate`, `ActivityEndTime`, `ActivityDepthHeightMeasure`, `ActivityDepthHeightUnit`, `SampleCollectionEquipmentName`, `CharacteristicName`, `MethodSpeciation`, `ResultSampleFraction`, `ResultValue`, `ResultUnit`, `ResultValueType`, `ResultDetectionCondition`, `ResultDetectionQuantitationLimitMeasure`, `ResultDetectionQuantitationLimitUnit`, `ResultDetectionQuantitationLimitType`, `ResultStatusID`, `ResultComment`, `ResultAnalyticalMethodID`, `ResultAnalyticalMethodContext`, `ResultAnalyticalMethodName`, `AnalysisStartDate`, `AnalysisStartTime`, `AnalysisStartTimeZone`, `LaboratoryName`, `LaboratorySampleID`
   - Order By: `DatasetName`, `ActivityStartDate`, `ActivityStartTime`, `ActivityEndDate`, `ActivityEndTime`, `CharacteristicName`
-- **POST /Records (Future)**
+- **POST /Records(DatasetId=@dataset_id)?@dataset_id (Future)**
+  - Type: `record`
+  - Body: `DatasetName`, `MonitoringLocationID`, `MonitoringLocationName`, `MonitoringLocationLatitude`, `MonitoringLocationLongitude`, `MonitoringLocationHorizontalCoordinateReferenceSystem`, `MonitoringLocationType`, `ActivityType`, `ActivityMediaName`, `ActivityStartDate`, `ActivityStartTime`, `ActivityEndDate`, `ActivityEndTime`, `ActivityDepthHeightMeasure`, `ActivityDepthHeightUnit`, `SampleCollectionEquipmentName`, `CharacteristicName`, `MethodSpeciation`, `ResultSampleFraction`, `ResultValue`, `ResultUnit`, `ResultValueType`, `ResultDetectionCondition`, `ResultDetectionQuantitationLimitMeasure`, `ResultDetectionQuantitationLimitUnit`, `ResultDetectionQuantitationLimitType`, `ResultStatusID`, `ResultComment`, `ResultAnalyticalMethodID`, `ResultAnalyticalMethodContext`, `ResultAnalyticalMethodName`, `AnalysisStartDate`, `AnalysisStartTime`, `AnalysisStartTimeZone`, `LaboratoryName`, `LaboratorySampleID`
 
-## OData Parameters
+### Body Object
+```json
+{
+  "data":{
+    "type":"record", 
+    "attributes":{
+       ...
+    }
+  }
+}
+```
+
+### URL Parameters
 OData accepts certain query parameters. The ones supported by this API are:
 - **$select**
   - Fields to be selected are entered comma delimited.
@@ -117,7 +138,7 @@ curl -G -H 'x-api-key: PRIVATE-API-KEY' \
 
 ## Errors
 ### 413 Payload Too Large
-This means your request result was too large. Lowering `$top` or only pulling the values you need should resolve this issue.
+This means your request result was too large. Lowering `$top` or only requesting the values you need should resolve this issue.
 
 ### 504 Timeout
 This means your request was too complicated and was unable to complete within 30sec. Lowering `$top` should resolve this issue.
