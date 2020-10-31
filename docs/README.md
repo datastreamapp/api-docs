@@ -1,5 +1,5 @@
 <h1 align="center">
-  <img src="https://raw.githubusercontent.com/gordonfn/api/master/docs/images/datastream.svg?sanitize=true" alt="DataStream Logo" width="400">
+  <img src="https://raw.githubusercontent.com/gordonfn/api/main/docs/images/datastream.svg?sanitize=true" alt="DataStream Logo" width="400">
   <br/>
   DataStream Public API Documentation
   <br/>
@@ -15,8 +15,10 @@ Our public API uses the ISO/IEC 20802-2 Standard known as [OData JSON Format v4]
 Thank you ahead of time for using this data responsibly and providing the appropriate citations when necessary when being presented to external parties. These citations must be accompanied by a link to the DOI (https://doi.org/{value}). The licence, citation, and DOI can be retrieved from the `/Metadata` endpoint.
 
 ## Modules
-### R
-If you plan to pull from the API using `R`, checkout our [`R` package](https://github.com/gordonfn/datastreamr). Be sure to watch the repository for update notifications.
+We have built modules to wrap around our API to make it easier to use.
+- [`R`](https://github.com/gordonfn/datastreamr)
+- [`Python`](https://github.com/gordonfn/datastreampy) (future)
+- [`JavaScript`](https://github.com/gordonfn/datastreamjs) (future)
 
 ## Endpoints
 You can test out your script by prefixing `https://qa-api.datastream.org/v1/odata/v4` to the endpoints.
@@ -147,5 +149,5 @@ This means your request was too complicated and was unable to complete within 30
 We are currently in a Beta, changes will happen. We will do our best effort to keep you informed of any breaking changes.
 
 <div align="center">
-  <a href="http://gordonfoundation.ca"><img src="https://raw.githubusercontent.com/gordonfn/api/master/docs/images/the-gordon-foundation.svg?sanitize=true" alt="The Gordon Foundation Logo" width="200"></a>
+  <a href="http://gordonfoundation.ca"><img src="https://raw.githubusercontent.com/gordonfn/api/main/docs/images/the-gordon-foundation.svg?sanitize=true" alt="The Gordon Foundation Logo" width="200"></a>
 </div>
