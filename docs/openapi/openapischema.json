@@ -26,6 +26,46 @@
         "tags": [
           "Dataset"
         ]
+      },
+      "patch": {
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/PatchMetadata"
+                  },
+                  "type": "String"
+                }
+              }
+            },
+            "description": "successful operation"
+          }
+        },
+        "tags": [
+          "Dataset"
+        ]
+      },
+      "post": {
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/PostMetadata"
+                  },
+                  "type": "String"
+                }
+              }
+            },
+            "description": "successful operation"
+          }
+        },
+        "tags": [
+          "Dataset"
+        ]
       }
     },
     "v1/odata/v4/Locations": {
@@ -94,6 +134,50 @@
         ]
       }
     },
+    "v1/odata/v4/Records": {
+      "delete": {
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/DeleteRecords"
+                  },
+                  "type": "String"
+                }
+              }
+            },
+            "description": "successful operation"
+          }
+        },
+        "tags": [
+          "Record"
+        ]
+      }
+    },
+    "v1/odata/v4/Records": {
+      "post": {
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/PostRecords"
+                  },
+                  "type": "String"
+                }
+              }
+            },
+            "description": "successful operation"
+          }
+        },
+        "tags": [
+          "Record"
+        ]
+      }
+    }
   },
   "components": {
     "schemas": {
@@ -165,6 +249,32 @@
                 "CreateTimestamp": {
                   "type": "string"
                 }
+              }
+            }
+          }
+        }
+      },
+      "PatchMetadata": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "object",
+            "properties": {
+              "Location": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "PostMetadata": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "object",
+            "properties": {
+              "Location": {
+                "type": "string"
               }
             }
           }
@@ -462,6 +572,27 @@
                 "LaboratorySampleID": {
                   "type": "string"
                 }
+              }
+            }
+          }
+        }
+      },
+      "DeleteRecords": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "object"
+          }
+        }
+      },
+      "PostRecords": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "object",
+            "properties": {
+              "Location": {
+                "type": "string"
               }
             }
           }
