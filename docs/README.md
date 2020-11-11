@@ -62,9 +62,10 @@ Remember that your API key is for your use only. Please do not share your API ke
 ```json
 {
   "data":{
-    "type":"record",
-    "attributes":{
-       ...
+    "value":{
+      "items": [
+        ...
+      ]
     }
   }
 }
