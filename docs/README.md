@@ -81,7 +81,7 @@ OData accepts certain query parameters. The ones supported by this API are:
   - Available filters: `eq`, `lt`, `gt`, `lte`, `gte`, `ne`
   - Grouping: `$filter=CharacteristicName eq 'Dissolved oxygen saturation'` or `$filter=Doi eq '10.25976/n02z-mm23'`
   - Temporal: `$filter=CreateTimestamp gt '2020-03-23' and CreateTimestamp lt '2020-03-25'`
-  - Spatial: `$filter=GeometryId eq 'ds.hub.atlantic'`
+  - Spatial: `$filter=RegionId eq 'hub.atlantic'`
     - RegionId Values (We're actively working on these, values will change):
       - Partner Hubs: `hub.{atlantic,lakewinnipeg,mackenzie}`
       - Countries: `admin.2.{ca}`
