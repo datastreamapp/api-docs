@@ -40,7 +40,7 @@ Remember that your API key is for your use only. Please do not share your API ke
 
 - **GET /Locations**
   - Select By: `Id`, `DatasetId`, `NameId`, `Name`, `Latitude`, `Longitude`, `HorizontalCoordinateReferenceSystem`, `LatitudeNormalized`\*, `LongitudeNormalized`\*, `HorizontalCoordinateReferenceSystemNormalized`*
-  - Filter By: `Id`, `Name`, `Doi`, `CharacteristicName`, `RegionId`, `Latitude`, `Longitude`, `LatitudeNormalized`, `LongitudeNormalized`
+  - Filter By: `Id`, `DatasetId`, `Name`, `Doi`, `CharacteristicName`, `RegionId`, `Latitude`, `Longitude`, `LatitudeNormalized`, `LongitudeNormalized`
   - Order By: `Name`
 
   \* Normalized coordinates are in `WGS84` projection.
