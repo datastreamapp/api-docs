@@ -12,7 +12,7 @@
 Our public API uses the ISO/IEC 20802-2 Standard known as [OData JSON Format v4](https://odata.org).
 
 ## Attribution/Citation
-Thank you ahead of time for using this data responsibly and providing the appropriate citations when necessary when being presented to external parties. These citations must be accompanied by a link to the DOI (https://doi.org/{value}). The licence, citation, and DOI can be retrieved from the `/Metadata` endpoint.
+Thank you ahead of time for using this data responsibly and providing the appropriate citations when being presented to external parties. These citations must be accompanied by a link to the DOI (https://doi.org/{value}). The licence, citation, and DOI can be retrieved from the `/Metadata` endpoint.
 
 ## Modules
 We have built modules to wrap around our API to make it easier to use.
@@ -103,6 +103,9 @@ OData accepts certain query parameters. The ones supported by this API are:
   - Default: `false`
 
 When building an integration with any API, it's important to URL encode all query string parameters.
+
+### Uniqueness
+It is important to note that when a contributor replaces a dataset to modify a past observation, the old observations are repalced with a new entry.
 
 ### Performance Tips
 - Using `$select` to request only the parameters you need will decrease the amount of data needed to be transfer.
