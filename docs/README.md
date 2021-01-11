@@ -105,7 +105,10 @@ OData accepts certain query parameters. The ones supported by this API are:
 When building an integration with any API, it's important to URL encode all query string parameters.
 
 ### Uniqueness
-It is important to note that when a contributor replaces a dataset to modify a past observation, the old observations are repalced with a new entry.
+It is important to note that when a contributor replaces a dataset to modify a past observation, the old observations are deleted and replaced with a new observations. Locations can only be related to a single Dataset.
+
+### Strategy for getting data changes.
+Locations and Observations Ids are sequential and can be used to get new rows after they are published. Using `$skiptoken:Id=` will be useful in reducing excess requests. You can know when a dataset has been updated and how by checking the `version` and `PublishedTimestamp` response values. Minor will only include additions, while major may include change to previously published data.
 
 ### Performance Tips
 - Using `$select` to request only the parameters you need will decrease the amount of data needed to be transfer.
