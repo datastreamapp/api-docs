@@ -116,7 +116,7 @@ Locations and Observations Ids are sequential and can be used to get new rows af
 - Don't use `$orderby` unless you plan to pull a smaller number of results.
 
 ## Full examples
-
+### CURL
 Get the citation and licence for a dataset:
 ```bash
 curl -G -H 'x-api-key: PRIVATE-API-KEY' \
@@ -130,6 +130,55 @@ Get all `pH` observations in `Alberta`:
 curl -G -H 'x-api-key: PRIVATE-API-KEY' \
      https://api.datastream.org/v1/odata/v4/Observations \
      --data-urlencode "\$filter=CharacteristicName eq 'pH' and GeometryId eq 'iso.3166-2.ab'"
+```
+### Python
+Get the citation and licence for a dataset:
+```python
+import requests
+import requests.utils 
+
+url = "https://api.datastream.org/v1/odata/v4/Metadata?$select=Name,Licence,Citation,Doi,Version&$filter=DatasetId eq '0000-00000-00000-00000'"
+encoded_url = requests.utils.quote(url, safe="://=$?&")
+api_key = {"x-api-key": "#############"}
+
+r = requests.get(encoded_url, headers=api_key)
+```
+
+Get all `pH` observations in `Alberta`:
+```python
+import requests
+import requests.utils
+
+url = "https://api.datastream.org/v1/odata/v4/Observations?$filter=CharacteristicName eq 'pH' and GeometryId eq 'iso.3166-2.ab'"
+encoded_url = requests.utils.quote(url, safe="://=$?&")
+api_key = {"x-api-key": "#############"}
+
+r = requests.get(encoded_url, headers=api_key)
+```
+
+### R
+Get the citation and licence for a dataset:
+```R
+library(httr)
+
+url <- "https://api.datastream.org/v1/odata/v4/Metadata?$select=Name,Licence,Citation,Doi,Version&$filter=DatasetId eq '0000-00000-00000-00000'"
+api_key <- "#####################"
+
+encoded_url <- URLencode(url)
+
+response <- GET(encoded_url, add_headers(`x-api-key`=api_key))
+```
+
+Get all `pH` observations in `Alberta`:
+```R
+library(httr)
+
+url <- "https://api.datastream.org/v1/odata/v4/Observations?$filter=CharacteristicName eq 'pH' and GeometryId eq 'iso.3166-2.ab'"
+api_key <- "#####################"
+
+encoded_url <- URLencode(url)
+
+response <- GET(encoded_url, add_headers(`x-api-key`=api_key))
 ```
 
 ### Response Format
