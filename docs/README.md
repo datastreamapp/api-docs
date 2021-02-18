@@ -1,7 +1,7 @@
 <h1 align="center">
   <img src="https://raw.githubusercontent.com/gordonfn/api/main/docs/images/datastream.svg?sanitize=true" alt="DataStream Logo" width="400">
   <br/>
-  DataStream Public API (Beta) Documentation
+  DataStream Public API Documentation
   <br/>
   <br/>
 </h1>
@@ -129,7 +129,7 @@ Get all `pH` observations in `Alberta`:
 ```bash
 curl -G -H 'x-api-key: PRIVATE-API-KEY' \
      https://api.datastream.org/v1/odata/v4/Observations \
-     --data-urlencode "\$filter=CharacteristicName eq 'pH' and GeometryId eq 'admin.4.ca-ab'"
+     --data-urlencode "\$filter=CharacteristicName eq 'pH' and RegionId eq 'iso.3166-2.ab'"
 ```
 ### Python
 Get the citation and licence for a dataset:
@@ -149,7 +149,7 @@ Get all `pH` observations in `Alberta`:
 import requests
 import requests.utils
 
-url = "https://api.datastream.org/v1/odata/v4/Observations?$filter=CharacteristicName eq 'pH' and GeometryId eq 'iso.3166-2.ab'"
+url = "https://api.datastream.org/v1/odata/v4/Observations?$filter=CharacteristicName eq 'pH' and RegionId eq 'iso.3166-2.ab'"
 encoded_url = requests.utils.quote(url, safe="://=$?&")
 api_key = {"x-api-key": "#############"}
 
@@ -173,7 +173,7 @@ Get all `pH` observations in `Alberta`:
 ```R
 library(httr)
 
-url <- "https://api.datastream.org/v1/odata/v4/Observations?$filter=CharacteristicName eq 'pH' and GeometryId eq 'iso.3166-2.ab'"
+url <- "https://api.datastream.org/v1/odata/v4/Observations?$filter=CharacteristicName eq 'pH' and RegionId eq 'iso.3166-2.ab'"
 api_key <- "#####################"
 
 encoded_url <- URLencode(url)
