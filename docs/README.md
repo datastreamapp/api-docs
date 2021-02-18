@@ -129,7 +129,7 @@ Get all `pH` observations in `Alberta`:
 ```bash
 curl -G -H 'x-api-key: PRIVATE-API-KEY' \
      https://api.datastream.org/v1/odata/v4/Observations \
-     --data-urlencode "\$filter=CharacteristicName eq 'pH' and GeometryId eq 'iso.3166-2.ab'"
+     --data-urlencode "\$filter=CharacteristicName eq 'pH' and GeometryId eq 'admin.4.ca-ab'"
 ```
 ### Python
 Get the citation and licence for a dataset:
