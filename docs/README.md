@@ -173,7 +173,7 @@ Get all `pH` observations in `Alberta`:
 ```R
 library(httr)
 
-url <- "https://api.datastream.org/v1/odata/v4/Observations?$filter=CharacteristicName eq 'pH' and GeometryId eq 'iso.3166-2.ab'"
+url <- "https://api.datastream.org/v1/odata/v4/Observations?$filter=CharacteristicName eq 'pH' and GeometryId eq 'admin.4.ca-ab'"
 api_key <- "#####################"
 
 encoded_url <- URLencode(url)
