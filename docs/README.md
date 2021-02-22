@@ -149,7 +149,7 @@ Get all `pH` observations in `Alberta`:
 import requests
 import requests.utils
 
-url = "https://api.datastream.org/v1/odata/v4/Observations?$filter=CharacteristicName eq 'pH' and GeometryId eq 'iso.3166-2.ab'"
+url = "https://api.datastream.org/v1/odata/v4/Observations?$filter=CharacteristicName eq 'pH' and GeometryId eq 'admin.4.ca-ab'"
 encoded_url = requests.utils.quote(url, safe="://=$?&")
 api_key = {"x-api-key": "#############"}
 
