@@ -14,6 +14,21 @@ Our public API uses the ISO/IEC 20802-2 Standard known as [OData JSON Format v4]
 ## Attribution/Citation
 Thank you ahead of time for using this data responsibly and providing the appropriate citations when necessary when being presented to external parties. These citations must be accompanied by a link to the DOI (https://doi.org/{value}). The licence, citation, and DOI can be retrieved from the `/Metadata` endpoint.
 
+### Licence representations
+The API returns an id for a licence, these should be mapped to their full names with a link to the full licence details.
+- `odc-by`: 
+  - EN: Attribution Licence (ODC-By) v1.0
+  - FR: Licence d'attribution (ODC-By) v1.0
+  - URL: https://opendatacommons.org/licenses/by/1-0/
+- `odc-pddl`: 
+  - EN: Public Domain Dedication and Licence (ODC-PDDL) v1.0
+  - FR: Dédicace et licence du domaine public (ODC-PDDL) v1.0
+  - URL: https://opendatacommons.org/licenses/pddl/1-0/
+- `ogl`:
+  - EN: Open Government Licence (OGL)
+  - FR: Licence du gouvernement ouvert (OGL)
+  - There is not url for `ogl`, show the full disclaimer and link in-line href.
+
 ## Modules
 We have built modules to wrap around our API to make it easier to use.
 - [`R`](https://github.com/gordonfn/datastreamr)
