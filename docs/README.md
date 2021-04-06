@@ -27,7 +27,7 @@ The API returns an id for a licence, these should be mapped to their full names 
 - `ogl`:
   - EN: Open Government Licence (OGL)
   - FR: Licence du gouvernement ouvert (OGL)
-  - There is not url for `ogl`, show the full disclaimer and link in-line href.
+  - There is no url for `ogl`, show the full disclaimer and link in-line href.
 
 ## Modules
 We have built modules to wrap around our API to make it easier to use.
