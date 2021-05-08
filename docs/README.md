@@ -1,7 +1,7 @@
 <h1 align="center">
   <img src="https://raw.githubusercontent.com/gordonfn/api/main/docs/images/datastream.svg?sanitize=true" alt="DataStream Logo" width="400">
   <br/>
-  DataStream Public API (Beta) Documentation
+  DataStream Public API (Beta)
   <br/>
   <br/>
 </h1>
@@ -12,7 +12,22 @@
 Our public API uses the ISO/IEC 20802-2 Standard known as [OData JSON Format v4](https://odata.org).
 
 ## Attribution/Citation
-Thank you ahead of time for using this data responsibly and providing the appropriate citations when being presented to external parties. These citations must be accompanied by a link to the DOI (https://doi.org/{value}). The licence, citation, and DOI can be retrieved from the `/Metadata` endpoint.
+Thank you ahead of time for using this data responsibly and providing the appropriate citations when necessary when being presented to external parties. These citations must be accompanied by a link to the DOI (https://doi.org/{value}). The licence, citation, and DOI can be retrieved from the `/Metadata` endpoint.
+
+### Licence representations
+The API returns an id for a licence, these should be mapped to their full names with a link to the full licence details.
+- `odc-by`: 
+  - EN: Attribution Licence (ODC-By) v1.0
+  - FR: Licence d'attribution (ODC-By) v1.0
+  - URL: https://opendatacommons.org/licenses/by/1-0/
+- `odc-pddl`: 
+  - EN: Public Domain Dedication and Licence (ODC-PDDL) v1.0
+  - FR: Dédicace et licence du domaine public (ODC-PDDL) v1.0
+  - URL: https://opendatacommons.org/licenses/pddl/1-0/
+- `ogl`:
+  - EN: Open Government Licence (OGL)
+  - FR: Licence du gouvernement ouvert (OGL)
+  - There is no url for `ogl`, show the full disclaimer and link in-line href.
 
 ## Modules
 We have built modules to wrap around our API to make it easier to use.
@@ -108,19 +123,12 @@ OData accepts certain query parameters. The ones supported by this API are:
 
 When building an integration with any API, it's important to URL encode all query string parameters.
 
-### Uniqueness
-It is important to note that when a contributor replaces a dataset to modify a past observation, the old observations are deleted and replaced with a new observations. Locations can only be related to a single Dataset.
-
-### Strategy for getting data changes.
-Locations and Observations Ids are sequential and can be used to get new rows after they are published. Using `$skiptoken:Id=` will be useful in reducing excess requests. You can know when a dataset has been updated and how by checking the `version` and `PublishedTimestamp` response values. Minor will only include additions, while major may include change to previously published data.
-
 ### Performance Tips
 - Using `$select` to request only the parameters you need will decrease the amount of data needed to be transfer.
 - Using large `$skip` values can be slow (it's a database thing), slicing your data by `GeometryId` and/or `CharacteristicName` will help prevent this.
 - Don't use `$orderby` unless you plan to pull a smaller number of results.
 
 ## Full examples
-### CURL
 Get the citation and licence for a dataset:
 ```bash
 curl -G -H 'x-api-key: PRIVATE-API-KEY' \
@@ -133,56 +141,7 @@ Get all `pH` observations in `Alberta`:
 ```bash
 curl -G -H 'x-api-key: PRIVATE-API-KEY' \
      https://api.datastream.org/v1/odata/v4/Observations \
-     --data-urlencode "\$filter=CharacteristicName eq 'pH' and RegionId eq 'admin.4.ca-ab'"
-```
-### Python
-Get the citation and licence for a dataset:
-```python
-import requests
-import requests.utils 
-
-url = "https://api.datastream.org/v1/odata/v4/Metadata?$select=Name,Licence,Citation,Doi,Version&$filter=DatasetId eq '0000-00000-00000-00000'"
-encoded_url = requests.utils.quote(url, safe="://=$?&")
-api_key = {"x-api-key": "#############"}
-
-r = requests.get(encoded_url, headers=api_key)
-```
-
-Get all `pH` observations in `Alberta`:
-```python
-import requests
-import requests.utils
-
-url = "https://api.datastream.org/v1/odata/v4/Observations?$filter=CharacteristicName eq 'pH' and RegionId eq 'admin.4.ca-ab'"
-encoded_url = requests.utils.quote(url, safe="://=$?&")
-api_key = {"x-api-key": "#############"}
-
-r = requests.get(encoded_url, headers=api_key)
-```
-
-### R
-Get the citation and licence for a dataset:
-```R
-library(httr)
-
-url <- "https://api.datastream.org/v1/odata/v4/Metadata?$select=Name,Licence,Citation,Doi,Version&$filter=DatasetId eq '0000-00000-00000-00000'"
-api_key <- "#####################"
-
-encoded_url <- URLencode(url)
-
-response <- GET(encoded_url, add_headers(`x-api-key`=api_key))
-```
-
-Get all `pH` observations in `Alberta`:
-```R
-library(httr)
-
-url <- "https://api.datastream.org/v1/odata/v4/Observations?$filter=CharacteristicName eq 'pH' and RegionId eq 'admin.4.ca-ab'"
-api_key <- "#####################"
-
-encoded_url <- URLencode(url)
-
-response <- GET(encoded_url, add_headers(`x-api-key`=api_key))
+     --data-urlencode "\$filter=CharacteristicName eq 'pH' and GeometryId eq 'iso.3166-2.ab'"
 ```
 
 ### Response Format

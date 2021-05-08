@@ -10,7 +10,6 @@
         integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
         crossorigin=""></script>
 <script type="module">
-  const filter = `` // `RegionId eq 'hub.greatlakes'`
   const map = L.map('map', {
     keyboard: false,
     dragging: false,
@@ -81,9 +80,9 @@
     return []
   }
 
-  const init = async (filter) => {
+  const init = async () => {
 
-    let locations = await getLocations(filter)
+    let locations = await getLocations()  // `RegionId eq 'hub.greatlakes'`
     const datasetIds = [...new Set(locations.map(l => l.DatasetId))]
     let metadata = await getMetadata(datasetIds)
 
@@ -126,7 +125,7 @@
       }
     })
   }
-  init(filter)
+  init()
 </script>
 </body>
 </html>
