@@ -32,6 +32,7 @@ Remember that your API key is for your use only. Please do not share your API ke
 - **GET /Metadata**
   - Select By: `DOI`, `Version`, `DatasetName`, `DataStewardEmail`, `DataCollectionOrganization`, `DataUploadOrganization`, `ProgressCode`, `MaintenanceFrequencyCode`, `Abstract`, `DataCollectionInformation`, `DataProcessing`, `FundingSources`, `DataSourceURL`, `OtherDataSources`, `Citation`,   `Licence`, `Disclaimer`, `TopicCategoryCode`, `Keywords`, `CreateTimestamp`
   - Filter By: `DOI`, `DatasetName`, `RegionId`, `Latitude`, `Longitude`, `LatitudeNormalized`, `LongitudeNormalized`, `CreateTimestamp`
+    - Filter functions `startswith`, `endswith`, and `contains` available for `DOI`.
   - Order By: `DatasetName`, `CreateTimestamp`
 <!--
 - **POST /Metadata** (Future)
@@ -97,6 +98,7 @@ OData accepts certain query parameters. The ones supported by this API are:
       - Watersheds/Drainage Areas: `watershed.oda.*`,`watershed.mda.*`,`watershed.sda.*`,`watershed.ssda.*` (Future)
       - Water: `waterbody.marine.*`, `waterbody.greatlakes.*`, `waterbody.lakes.*`, `waterbody.rivers.*` (Future)
     - Bounding box `$filter=LongitudeNormalized gt '-102.01' and LongitudeNormalized lt '-88.99' and LatitudeNormalized gt '49' and LatitudeNormalized lt '60'`
+  - Functions: `$filter=contains(DOI, '10.25976')`, `$filter=startwith(DOI, 'https://')`, `$filter=endswith(DOI, 'xxxx-xxxx')`
 - **$top**
   - Maximum: 10000
   - Example: `$top=10`
