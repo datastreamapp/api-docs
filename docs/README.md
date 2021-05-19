@@ -98,7 +98,7 @@ OData accepts certain query parameters. The ones supported by this API are:
       - Watersheds/Drainage Areas: `watershed.oda.*`,`watershed.mda.*`,`watershed.sda.*`,`watershed.ssda.*` (Future)
       - Water: `waterbody.marine.*`, `waterbody.greatlakes.*`, `waterbody.lakes.*`, `waterbody.rivers.*` (Future)
     - Bounding box `$filter=LongitudeNormalized gt '-102.01' and LongitudeNormalized lt '-88.99' and LatitudeNormalized gt '49' and LatitudeNormalized lt '60'`
-  - Functions: `$filter=contains(DOI, '10.25976')`, `$filter=startwith(DOI, 'https://')`, `$filter=endswith(DOI, 'xxxx-xxxx')`
+  - Functions: `$filter=contains(DOI, 'xxxx')`, `$filter=startwith(DOI, 'xxxx')`, `$filter=endswith(DOI, 'xxxx-xxxx')`
 - **$top**
   - Maximum: 10000
   - Example: `$top=10`
@@ -125,7 +125,7 @@ Get the citation and licence for a dataset:
 curl -G -H 'x-api-key: PRIVATE-API-KEY' \
      https://api.datastream.org/v1/odata/v4/Metadata \
      --data-urlencode "\$select=DOI,DatasetName,Licence,Citation,Version" \
-     --data-urlencode "\$filter=DOI eq '10.25976/xxxx-xxxx'" \
+     --data-urlencode "\$filter=endswith(DOI, 'xxxx-xxxx')" \
 ```
 
 Get all `pH` observations in `Alberta`:
