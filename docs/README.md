@@ -23,7 +23,7 @@ We have built modules to wrap around our API to make it easier to use.
 -->
 
 ## Endpoints
-You can test out your script by prefixing `https://qa-api.datastream.org/v1/odata/v4` to the endpoints.
+You can test out your script by prefixing `https://api.qa.datastream.org/v1/odata/v4` to the endpoints.
 When you're ready to pull data from the production system you can use: `https://api.datastream.org/v1/odata/v4`.
 For browser requests all you need to do is let us know your domain name and we can add it to the CORS whitelist, only GET requests are supported. All other application should store the API Key in the header `x-api-key`.
 
