@@ -7,7 +7,8 @@
 </h1>
 
 ```bash
-# 1. Download this folder
+# 1. Download and navigate to this folder
+#    https://github.com/gordonfn/api/archive/refs/heads/main.zip
 # 2. Install nodeJS pacakges
 npm install
 # 3. Add in API Key to `main.js`
@@ -18,3 +19,5 @@ const filter = ""
 npm start
 # 6. Go to `http://localhost:1234` for live preview
 ```
+
+**Note:** If you're testing on localhost, you may run into CORS not working with localhost. This is a special case. You may need a browser extension to https://chrome.google.com/webstore/detail/allow-cors-access-control/lhobafahddgcelffkeicbaginigeejlf
