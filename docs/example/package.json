@@ -1,0 +1,17 @@
+{
+  "name": "leaflet",
+  "type": "module",
+  "scripts": {
+    "start": "parcel index.html",
+    "build": "parcel build --public-url . index.html"
+  },
+  "dependencies": {
+    "leaflet": "^1.7.1"
+  },
+  "devDependencies": {
+    "@parcel/compressor-brotli": "2.0.0",
+    "@parcel/compressor-gzip": "2.0.0",
+    "@parcel/optimizer-esbuild": "2.0.0",
+    "parcel": "^2.0.0"
+  }
+}
