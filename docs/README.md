@@ -32,7 +32,6 @@ Remember that your API key is for your use only. Please do not share your API ke
 - **GET /Metadata**
   - Select By: `DOI`, `Version`, `DatasetName`, `DataStewardEmail`, `DataCollectionOrganization`, `DataUploadOrganization`, `ProgressCode`, `MaintenanceFrequencyCode`, `Abstract`, `DataCollectionInformation`, `DataProcessing`, `FundingSources`, `DataSourceURL`, `OtherDataSources`, `Citation`,   `Licence`, `Disclaimer`, `TopicCategoryCode`, `Keywords`, `CreateTimestamp`
   - Filter By: `DOI`, `DatasetName`, `RegionId`, `Latitude`, `Longitude`, `LatitudeNormalized`, `LongitudeNormalized`, `CreateTimestamp`
-    - Filter functions `startswith`, `endswith`, and `contains` available for `DOI`.
   - Order By: `DatasetName`, `CreateTimestamp`
 <!--
 - **POST /Metadata** (Future)
@@ -88,7 +87,7 @@ OData accepts certain query parameters. The ones supported by this API are:
   - Example: `$orderby=DatasetName,CreateTimestamp`
 - **$filter**
   - Available filters: `eq`, `lt`, `gt`, `lte`, `gte`, `ne`
-  - Grouping: `$filter=CharacteristicName eq 'Dissolved oxygen saturation'` or `$filter=DOI eq '10.25976/n02z-mm23'`
+  - Grouping: `$filter=CharacteristicName eq 'Dissolved oxygen saturation'` or `$filter=DOI eq '10.25976/{suffix}'` where `{suffix}` is replaced with a value.
   - Temporal: `$filter=CreateTimestamp gt '2020-03-23' and CreateTimestamp lt '2020-03-25'`
   - Spatial: `$filter=RegionId eq 'hub.atlantic'`
     - RegionId Values (these values are subject to change):
@@ -98,7 +97,7 @@ OData accepts certain query parameters. The ones supported by this API are:
       - Watersheds/Drainage Areas: `watershed.oda.*`,`watershed.mda.*`,`watershed.sda.*`,`watershed.ssda.*` (Future)
       - Water: `waterbody.marine.*`, `waterbody.greatlakes.*`, `waterbody.lakes.*`, `waterbody.rivers.*` (Future)
     - Bounding box `$filter=LongitudeNormalized gt '-102.01' and LongitudeNormalized lt '-88.99' and LatitudeNormalized gt '49' and LatitudeNormalized lt '60'`
-  - Functions: `$filter=contains(DOI, 'xxxx')`, `$filter=startwith(DOI, 'xxxx')`, `$filter=endswith(DOI, 'xxxx-xxxx')`
+  <!-- - Functions: `$filter=contains(DOI, 'xxxx')`, `$filter=startwith(DOI, 'xxxx')`, `$filter=endswith(DOI, 'xxxx-xxxx')` -->
 - **$top**
   - Maximum: 10000
   - Example: `$top=10`
