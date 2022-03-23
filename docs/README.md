@@ -91,7 +91,7 @@ OData accepts certain query parameters. The ones supported by this API are:
   - Temporal: `$filter=CreateTimestamp gt '2020-03-23' and CreateTimestamp lt '2020-03-25'`
   - Spatial: `$filter=RegionId eq 'hub.atlantic'`
     - RegionId Values (these values are subject to change):
-      - Partner Hubs: `hub.{atlantic,lakewinnipeg,mackenzie}`
+      - Partner Hubs: `hub.{atlantic,greatlakes,lakewinnipeg,mackenzie,pacific}`
       - Countries: `admin.2.{ca}`
       - Provinces/Territories/States: `admin.4.ca-{ab,bc,...,yt}`
       - Watersheds/Drainage Areas: `watershed.oda.*`,`watershed.mda.*`,`watershed.sda.*`,`watershed.ssda.*` (Future)
