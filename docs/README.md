@@ -32,17 +32,9 @@ Remember that your API key is for your use only. Please do not share your API ke
 - **GET /Metadata**
   - Retrieves the dataset-level metadata for the datasets that meet your query criteria.   
   - Select By: `DOI`, `Version`, `DatasetName`, `DataStewardEmail`, `DataCollectionOrganization`, `DataUploadOrganization`, `ProgressCode`, `MaintenanceFrequencyCode`, `Abstract`, `DataCollectionInformation`, `DataProcessing`, `FundingSources`, `DataSourceURL`, `OtherDataSources`, `Citation`,   `Licence`, `Disclaimer`, `TopicCategoryCode`, `Keywords`, `CreateTimestamp`
-  - Filter By: `DOI`, `DatasetName`, `RegionId`, `Latitude`, `Longitude`, `LatitudeNormalized`, `LongitudeNormalized`, `CreateTimestamp`
+  - Filter By: `DOI`, `DatasetName`, `RegionId`, `MonitoringLocationType`, `Latitude`, `Longitude`, `LatitudeNormalized`, `LongitudeNormalized`,  `CreateTimestamp`
   - Order By: `DatasetName`, `CreateTimestamp`
-<!--
-- **POST /Metadata** (Future)
-  - Type: `metadata`
-  - Body: `DatasetName`, `DataStewardEmail`, `DataCollectionOrganization`, `DataUploadOrganization`, `ProcessCode`, `MaintenanceFrequencyCode`, `Abstract`, `DataCollectionInformation`, `DataProcessing`, `FundingSources`, `DataSourceURL`, `OtherDataSources`, `Citation`,   `Licence`, `Disclaimer`, `TopicCategory`, `Keywords`
 
-- **PATCH /Metadata?@DOI=** (Future)
-  - Type: `metadata`
-  - Body: `DatasetName`, `DataStewardEmail`, `DataCollectionOrganization`, `DataUploadOrganization`, `ProcessCode`, `MaintenanceFrequencyCode`, `Abstract`, `DataCollectionInformation`, `DataProcessing`, `FundingSources`, `DataSourceURL`, `OtherDataSources`, `Citation`,   `Licence`, `Disclaimer`, `TopicCategory`, `Keywords`
--->
 - **GET /Locations**
   - Retrieves the location information that meets your query criteria.
   - Select By: `Id`, `DOI`, `NameId`, `Name`, `Latitude`, `Longitude`, `HorizontalCoordinateReferenceSystem`, `HorizontalAccuracyMeasure`, `HorizontalAccuracyUnit`, `VerticalMeasure`, `VerticalUnit`, `Type`, `LatitudeNormalized`\*, `LongitudeNormalized`\*, `HorizontalCoordinateReferenceSystemNormalized`*
@@ -62,13 +54,6 @@ Remember that your API key is for your use only. Please do not share your API ke
   - Select By: `Id`, `DOI`, `DatasetName`, `MonitoringLocationID`, `MonitoringLocationName`, `MonitoringLocationLatitude`, `MonitoringLocationLongitude`, `MonitoringLocationHorizontalCoordinateReferenceSystem`, `MonitoringLocationHorizontalAccuracyMeasure`, `MonitoringLocationHorizontalAccuracyUnit`, `MonitoringLocationVerticalMeasure`, `MonitoringLocationVerticalUnit`, `MonitoringLocationType`, `ActivityType`, `ActivityMediaName`, `ActivityStartDate`, `ActivityStartTime`, `ActivityEndDate`, `ActivityEndTime`, `ActivityDepthHeightMeasure`, `ActivityDepthHeightUnit`, `SampleCollectionEquipmentName`, `CharacteristicName`, `MethodSpeciation`, `ResultSampleFraction`, `ResultValue`, `ResultUnit`, `ResultValueType`, `ResultDetectionCondition`, `ResultDetectionQuantitationLimitMeasure`, `ResultDetectionQuantitationLimitUnit`, `ResultDetectionQuantitationLimitType`, `ResultStatusID`, `ResultComment`, `ResultAnalyticalMethodID`, `ResultAnalyticalMethodContext`, `ResultAnalyticalMethodName`, `AnalysisStartDate`, `AnalysisStartTime`, `AnalysisStartTimeZone`, `LaboratoryName`, `LaboratorySampleID`
   - Filter By:  `DOI`, `MonitoringLocationType`, `ActivityStartYear`, `ActivityMediaName`, `CharacteristicName`, `LocationId`
   - Order By: `Id`, `ActivityStartDate`, `ActivityStartTime`
-
-<!--
-- **POST /Records?@DOI=** (Future)
-  - Type: `record`
-  - Max Items: 10
-  - Body: `DatasetName`, `MonitoringLocationID`, `MonitoringLocationName`, `MonitoringLocationLatitude`, `MonitoringLocationLongitude`, `MonitoringLocationHorizontalCoordinateReferenceSystem`, `MonitoringLocationHorizontalAccuracyMeasure`, `MonitoringLocationHorizontalAccuracyUnit`, `MonitoringLocationVerticalMeasure`, `MonitoringLocationVerticalUnit`, `MonitoringLocationType`, `ActivityType`, `ActivityMediaName`, `ActivityStartDate`, `ActivityStartTime`, `ActivityEndDate`, `ActivityEndTime`, `ActivityDepthHeightMeasure`, `ActivityDepthHeightUnit`, `SampleCollectionEquipmentName`, `CharacteristicName`, `MethodSpeciation`, `ResultSampleFraction`, `ResultValue`, `ResultUnit`, `ResultValueType`, `ResultDetectionCondition`, `ResultDetectionQuantitationLimitMeasure`, `ResultDetectionQuantitationLimitUnit`, `ResultDetectionQuantitationLimitType`, `ResultStatusID`, `ResultComment`, `ResultAnalyticalMethodID`, `ResultAnalyticalMethodContext`, `ResultAnalyticalMethodName`, `AnalysisStartDate`, `AnalysisStartTime`, `AnalysisStartTimeZone`, `LaboratoryName`, `LaboratorySampleID`
--->
 
 ### Body Object
 ```json
