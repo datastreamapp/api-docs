@@ -52,7 +52,7 @@ Remember that your API key is for your use only. Please do not share your API ke
 - **GET /Records**
   - Retrieves the data in the DataStream schema format with all columns that meet your query criteria. 
   - Select By: `Id`, `DOI`, `DatasetName`, `MonitoringLocationID`, `MonitoringLocationName`, `MonitoringLocationLatitude`, `MonitoringLocationLongitude`, `MonitoringLocationHorizontalCoordinateReferenceSystem`, `MonitoringLocationHorizontalAccuracyMeasure`, `MonitoringLocationHorizontalAccuracyUnit`, `MonitoringLocationVerticalMeasure`, `MonitoringLocationVerticalUnit`, `MonitoringLocationType`, `ActivityType`, `ActivityMediaName`, `ActivityStartDate`, `ActivityStartTime`, `ActivityEndDate`, `ActivityEndTime`, `ActivityDepthHeightMeasure`, `ActivityDepthHeightUnit`, `SampleCollectionEquipmentName`, `CharacteristicName`, `MethodSpeciation`, `ResultSampleFraction`, `ResultValue`, `ResultUnit`, `ResultValueType`, `ResultDetectionCondition`, `ResultDetectionQuantitationLimitMeasure`, `ResultDetectionQuantitationLimitUnit`, `ResultDetectionQuantitationLimitType`, `ResultStatusID`, `ResultComment`, `ResultAnalyticalMethodID`, `ResultAnalyticalMethodContext`, `ResultAnalyticalMethodName`, `AnalysisStartDate`, `AnalysisStartTime`, `AnalysisStartTimeZone`, `LaboratoryName`, `LaboratorySampleID`
-  - Filter By:  `DOI`, `MonitoringLocationType`, `ActivityStartYear`, `ActivityMediaName`, `CharacteristicName`, `LocationId`
+  - Filter By:  `DOI`, `MonitoringLocationType`, `ActivityStartYear`, `ActivityMediaName`, `CharacteristicName`, `RegionId`, `LocationId`
   - Order By: `Id`, `ActivityStartDate`, `ActivityStartTime`
 
 ### Body Object
