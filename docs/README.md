@@ -77,9 +77,6 @@ OData accepts certain query parameters. The ones supported by this API are:
   - Fields to be selected are entered comma delimited.
   - Example: `$select=DatasetName,Abstract`
   - Default: All columns available.
-- **$orderby**
-  - Fields to order by are entered comma delimited.
-  - Example: `$orderby=DatasetName,CreateTimestamp`
 - **$filter**
   - Available filters: `eq`, `lt`, `gt`, `lte`, `gte`, `ne`
   - Grouping: `$filter=CharacteristicName eq 'Dissolved oxygen saturation'` or `$filter=DOI eq '10.25976/{suffix}'` where `{suffix}` is replaced with a value.
@@ -96,8 +93,6 @@ OData accepts certain query parameters. The ones supported by this API are:
 - **$top**
   - Maximum: 10000
   - Example: `$top=10`
-- **$skip**
-  - Example: `$skip=10`
 - **$skiptoken**
   - Return the next items after the skipped token, cannot be paired with `$orderby`
   - Example: `$skiptoken=Id:1234`
@@ -105,13 +100,22 @@ OData accepts certain query parameters. The ones supported by this API are:
   - Return only the count for the request. When the value is large enough it becomes an estimate (~0.0005% accurate)
   - Example: `$count=true`
   - Default: `false`
+<!--
+- **$orderby**
+  - Fields to order by are entered comma delimited.
+  - Example: `$orderby=DatasetName,CreateTimestamp`
+- **$skip**
+  - Example: `$skip=10`
+-->
 
 When building an integration with any API, it's important to URL encode all query string parameters.
 
 ### Performance Tips
 - Using `$select` to request only the parameters you need will decrease the amount of data needed to be transfer.
+<!--
 - Using large `$skip` values can be slow (it's a database thing), slicing your data by `GeometryId` and/or `CharacteristicName` will help prevent this.
 - Don't use `$orderby` unless you plan to pull a smaller number of results.
+-->
 
 ## Full examples
 Get the citation and licence for a dataset:
