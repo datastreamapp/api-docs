@@ -144,7 +144,7 @@ curl -G -H 'x-api-key: PRIVATE-API-KEY' \
 ### 413 Payload Too Large
 This means your request result was too large. Lowering `$top` or only requesting the values you need should resolve this issue.
 
-### 504 Timeout
+### 408 or 504 Timeout
 This means your request was too complicated and was unable to complete within 30sec. Lowering `$top` should resolve this issue.
 
 ## Disclaimer
