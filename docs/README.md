@@ -145,7 +145,7 @@ curl -G -H 'x-api-key: PRIVATE-API-KEY' \
 This means your request result was too large. Lowering `$top` or only requesting the values you need should resolve this issue.
 
 ### 408 or 504 Timeout
-This means your request was too complicated and was unable to complete within 30sec. Lowering `$top` should resolve this issue.
+This means your request was too complicated and was unable to complete within 30sec. Lowering `$top` and/or adding in narrower filtering should resolve this issue.
 
 ## Disclaimer
 We are currently in a Beta, changes will happen. We will do our best effort to keep you informed of any breaking changes.
