@@ -16,10 +16,10 @@ Thank you ahead of time for using this data responsibly and providing the approp
 
 ## Modules
 We have built modules to wrap around our API to make it easier to use.
-- [`JavaScript`](https://github.com/datastreamjs/datastreamjs)
-- [`R`](https://github.com/datastreamjs/datastreamr)
+- [`JavaScript`](https://github.com/datastreamapp/datastreamjs)
+- [`R`](https://github.com/datastreamapp/datastreamr)
 <!--
-- [`Python`](https://github.com/datastreamjs/datastreampy)
+- [`Python`](https://github.com/datastreamapp/datastreampy)
 -->
 
 For those build they're own implementation, here are some key things to keep in mind:
