@@ -86,7 +86,7 @@ OData accepts certain query parameters. The ones supported by this API are:
       - Partner Hubs: `hub.{atlantic,greatlakes,lakewinnipeg,mackenzie,pacific}`
       - Countries: `admin.2.{ca}`
       - Provinces/Territories/States: `admin.4.ca.{ab,bc,mb,nb,nl,ns,nt,nu.on,pe,,qc,sk,yt}`
-      - <!--
+      <!--
       - Watersheds/Drainage Areas: `watershed.oda.*`,`watershed.mda.*`,`watershed.sda.*`,`watershed.ssda.*` (Future)
       - Water body: `waterbody.marine.*`, `waterbody.greatlakes.*`, `waterbody.lakes.*`, `waterbody.rivers.*` (Future)
 -->
