@@ -18,6 +18,7 @@ Thank you ahead of time for using this data responsibly and providing the approp
 We have built modules to wrap around our API to make it easier to use.
 - [`JavaScript`](https://github.com/datastreamapp/datastreamjs)
 - [`R`](https://github.com/datastreamapp/datastreamr)
+- [`Shell`](https://github.com/datastreamapp/datastreamsh)
 <!--
 - [`Python`](https://github.com/datastreamapp/datastreampy)
 -->
