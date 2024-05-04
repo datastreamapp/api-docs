@@ -83,7 +83,7 @@ OData accepts certain query parameters. The ones supported by this API are:
   - Example: `$select=DatasetName,Abstract`
   - Default: All columns available.
 - **$filter**
-  - Available filters: `eq`, `lt`, `gt`, `lte`, `gte`, `ne`
+  - Available operators: `in`, `eq`, `lt`, `gt`, `lte`, `gte`, `ne`
   - Grouping: `$filter=CharacteristicName eq 'Dissolved oxygen saturation'` or `$filter=DOI eq '10.25976/{suffix}'` where `{suffix}` is replaced with a value.
   - Temporal: `$filter=CreateTimestamp gt '2020-03-23' and CreateTimestamp lt '2020-03-25'`
   - Spatial: `$filter=RegionId eq 'hub.atlantic'`
