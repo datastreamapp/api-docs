@@ -97,7 +97,7 @@ OData accepts certain query parameters. The ones supported by this API are:
   - Maximum: 10000
   - Example: `$top=10`
 - **$skiptoken**
-  - Return the next items after the skipped token, cannot be paired with `$orderby`
+  - Return the next items after the skipped token
   - Example: `$skiptoken=Id:1234`
 - **$count**
   - Return only the count for the request. When the value is large enough it becomes an estimate (~0.0005% accurate)
