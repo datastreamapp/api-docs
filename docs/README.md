@@ -20,9 +20,6 @@ We have built modules to wrap around our API to make it easier to use.
 - [`Python`](https://github.com/datastreamapp/datastream-py)
 - [`JavaScript`](https://github.com/datastreamapp/datastreamjs)
 - [`Shell`](https://github.com/datastreamapp/datastreamsh)
-<!--
-- [`Python`](https://github.com/datastreamapp/datastreampy)
--->
 
 For those building their own implementation, here are some key things to keep in mind:
 - Querystring parameters must be URL encoded. All languages should have a function to do this.
@@ -59,7 +56,8 @@ Remember that your API key is for your use only. Please do not share your API ke
  \* Normalized coordinates are in `WGS84` projection.
  
 - **GET /Records**
-  - Retrieves the data in the DataStream schema format with all columns that meet your query criteria. 
+  - Retrieves the data in the DataStream schema format with all columns that meet your query criteria.
+  - Only intended for streaming data directly into a CSV file. For all other use cases, we recommend using `/Observations` endpoint.
   - Select By: `Id`, `DOI`, `DatasetName`, `MonitoringLocationID`, `MonitoringLocationName`, `MonitoringLocationLatitude`, `MonitoringLocationLongitude`, `MonitoringLocationHorizontalCoordinateReferenceSystem`, `MonitoringLocationHorizontalAccuracyMeasure`, `MonitoringLocationHorizontalAccuracyUnit`, `MonitoringLocationVerticalMeasure`, `MonitoringLocationVerticalUnit`, `MonitoringLocationType`, `ActivityType`, `ActivityMediaName`, `ActivityStartDate`, `ActivityStartTime`, `ActivityEndDate`, `ActivityEndTime`, `ActivityDepthHeightMeasure`, `ActivityDepthHeightUnit`, `SampleCollectionEquipmentName`, `CharacteristicName`, `MethodSpeciation`, `ResultSampleFraction`, `ResultValue`, `ResultUnit`, `ResultValueType`, `ResultDetectionCondition`, `ResultDetectionQuantitationLimitMeasure`, `ResultDetectionQuantitationLimitUnit`, `ResultDetectionQuantitationLimitType`, `ResultStatusID`, `ResultComment`, `ResultAnalyticalMethodID`, `ResultAnalyticalMethodContext`, `ResultAnalyticalMethodName`, `AnalysisStartDate`, `AnalysisStartTime`, `AnalysisStartTimeZone`, `LaboratoryName`, `LaboratorySampleID`
   - Filter By:  `DOI`, `MonitoringLocationType`, `ActivityStartYear`, `ActivityMediaName`, `CharacteristicName`, `RegionId`, `LocationId`
 <!--  - Order By: `Id`, `ActivityStartDate`, `ActivityStartTime` -->
@@ -99,6 +97,7 @@ OData accepts certain query parameters. The ones supported by this API are:
 - **$skiptoken**
   - Return the next items after the skipped token
   - Example: `$skiptoken=Id:1234`
+  - For pagination, use `Link` header or `@odata.nextLink` in the JSON response body
 - **$count**
   - Return only the count for the request. When the value is large enough it becomes an estimate (~0.0005% accurate)
   - Example: `$count=true`
@@ -120,8 +119,19 @@ When building an integration with any API, it's important to URL encode all quer
 - Don't use `$orderby` unless you plan to pull a smaller number of results.
 -->
 
-## Full examples
-Get the citation and licence for a dataset:
+## Examples
+
+### Metadata
+
+#### Get all datasets in `Mackenzie` and `Lake Winnipeg` DataStream hubs
+```bash
+curl -G -H 'x-api-key: PRIVATE-API-KEY' \
+     https://api.datastream.org/v1/odata/v4/Metadata \
+     --data-urlencode "\$select=DOI,DatasetName,Licence,Citation,Version" \
+     --data-urlencode "\$filter=RegionId in ('hub.mackenzie', 'hub.lakewinnipeg')"
+```
+
+#### Get the citation and licence for a dataset:
 ```bash
 curl -G -H 'x-api-key: PRIVATE-API-KEY' \
      https://api.datastream.org/v1/odata/v4/Metadata \
@@ -129,14 +139,39 @@ curl -G -H 'x-api-key: PRIVATE-API-KEY' \
      --data-urlencode "\$filter=endswith(DOI, 'xxxx-xxxx')" \
 ```
 
-Get all `pH` observations in `Alberta`:
+### Locations
+
+#### Get Locations from a dataset
+```bash
+curl -G -H 'x-api-key: PRIVATE-API-KEY' \
+     https://api.datastream.org/v1/odata/v4/Locations \
+     --data-urlencode "\$filter=DOI eq '10.25976/xxxx-xx00'"
+```
+
+#### Get Locations from multiple datasets
+```bash
+curl -G -H 'x-api-key: PRIVATE-API-KEY' \
+     https://api.datastream.org/v1/odata/v4/Locations \
+     --data-urlencode "\$filter=DOI in ('10.25976/xxxx-xx00', '10.25976/xxxx-xx00', '10.25976/xxxx-xx00')"
+```
+
+### Observations
+
+#### Get Temperature and pH observations from multiple datasets
+```bash
+curl -G -H 'x-api-key: PRIVATE-API-KEY' \
+     https://api.datastream.org/v1/odata/v4/Observations \
+     --data-urlencode "\$filter=DOI in ('10.25976/xxxx-xx00', '10.25976/xxxx-xx00', '10.25976/xxxx-xx00') and CharacteristicName in ('Temperature, water', 'pH')"
+```
+
+#### Get all `pH` observations in `Alberta`:
 ```bash
 curl -G -H 'x-api-key: PRIVATE-API-KEY' \
      https://api.datastream.org/v1/odata/v4/Observations \
      --data-urlencode "\$filter=CharacteristicName eq 'pH' and RegionId eq 'admin.4.ca.ab'"
 ```
 
-### Response Format
+## Response Format
 ```json
 {
   "value": [{
