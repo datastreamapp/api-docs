@@ -37,21 +37,18 @@ Remember that your API key is for your use only. Please do not share your API ke
 
 - **GET /Metadata**
   - Retrieves the dataset-level metadata for the datasets that meet your query criteria.   
-  - Select By: `DOI`, `Version`, `DatasetName`, `DataStewardEmail`, `DataCollectionOrganization`, `DataUploadOrganization`, `ProgressCode`, `MaintenanceFrequencyCode`, `Abstract`, `DataCollectionInformation`, `DataProcessing`, `FundingSources`, `DataSourceURL`, `OtherDataSources`, `Citation`,   `Licence`, `Disclaimer`, `TopicCategoryCode`, `Keywords`, `CreateTimestamp`
-  - Filter By: `DOI`, `DatasetName`,  `MonitoringLocationType`,  `CreateTimestamp`, `RegionId`, `LatitudeNormalized`\*, `LongitudeNormalized`\*
-<!--  - Order By: `DatasetName`, `CreateTimestamp` -->
+  - Select By: `DOI`, `Version`, `DatasetName`, `DataStewardEmail`, `DataCollectionOrganization`, `DataUploadOrganization`, `ProgressCode`, `MaintenanceFrequencyCode`, `Abstract`, `DataCollectionInformation`, `DataProcessing`, `FundingSources`, `DataSourceURL`, `OtherDataSources`, `Citation`,   `Licence`, `Disclaimer`, `TopicCategoryCode`, `Keywords`, `CreateTimestamp`, `PublishedTimestamp`
+  - Filter By: `DOI`, `LocationId`, `ActivityMediaName`, `ActivityGroupType`, `CharacteristicName`, `MonitoringLocationType`, `ActivityStartYear`, `RegionId`, `LatitudeNormalized`\*, `LongitudeNormalized`\*, `DatasetName`, `CreateTimestamp`
 
 - **GET /Locations**
   - Retrieves the location information that meets your query criteria.
   - Select By: `Id`, `DOI`, `ID` (Maps to `MonitoringLocationID` internally), `Name`, `Latitude`, `Longitude`, `HorizontalCoordinateReferenceSystem`, `HorizontalAccuracyMeasure`, `HorizontalAccuracyUnit`, `VerticalMeasure`, `VerticalUnit`, `MonitoringLocationType`, `LatitudeNormalized`\*, `LongitudeNormalized`\*, `HorizontalCoordinateReferenceSystemNormalized`\*
-  - Filter By: `Id`, `DOI`, `Name`, `MonitoringLocationType`, `ActivityStartYear`, `ActivityMediaName`, `CharacteristicName`, `RegionId`,  `LatitudeNormalized`\*, `LongitudeNormalized`\*
-<!--  - Order By: `Id`, `Name` -->
+  - Filter By: `DOI`, `LocationId`, `ActivityMediaName`, `ActivityGroupType`, `CharacteristicName`, `MonitoringLocationType`, `ActivityStartYear`, `RegionId`, `LatitudeNormalized`\*, `LongitudeNormalized`\*, `Name`
 
 - **GET /Observations**
   - Retrieves the observations that meet your query criteria. 
   - Select By: `Id`,`LocationId`,  `DOI`, `ActivityType`, `ActivityMediaName`, `ActivityStartDate`, `ActivityStartTime`, `ActivityEndDate`, `ActivityEndTime`, `ActivityDepthHeightMeasure`, `ActivityDepthHeightUnit`, `SampleCollectionEquipmentName`, `CharacteristicName`, `MethodSpeciation`, `ResultSampleFraction`, `ResultValue`, `ResultUnit`, `ResultValueType`, `ResultDetectionCondition`, `ResultDetectionQuantitationLimitUnit`, `ResultDetectionQuantitationLimitMeasure`, `ResultDetectionQuantitationLimitType`, `ResultStatusID`, `ResultComment`, `ResultAnalyticalMethodID`, `ResultAnalyticalMethodContext`, `ResultAnalyticalMethodName`, `AnalysisStartDate`, `AnalysisStartTime`, `AnalysisStartTimeZone`, `LaboratoryName`, `LaboratorySampleID`, `CreateTimestamp`
-  - Filter By: `DOI`, `MonitoringLocationType`, `ActivityStartYear`, `ActivityMediaName`, `CharacteristicName`, `RegionId`, `LocationId`, `LatitudeNormalized`\*, `LongitudeNormalized`\*
-<!--  - Order By: `Id`, `ActivityStartDate`, `ActivityStartTime` -->
+  - Filter By: `DOI`, `LocationId`, `ActivityMediaName`, `ActivityGroupType`, `CharacteristicName`, `MonitoringLocationType`, `ActivityStartYear`, `RegionId`, `LatitudeNormalized`\*, `LongitudeNormalized`\*
 
  \* Normalized coordinates are in `WGS84` projection.
  
@@ -59,8 +56,7 @@ Remember that your API key is for your use only. Please do not share your API ke
   - Retrieves the data in the DataStream schema format with all columns that meet your query criteria.
   - Only intended for streaming data directly into a CSV file. For all other use cases, we recommend using `/Observations` endpoint.
   - Select By: `Id`, `DOI`, `DatasetName`, `MonitoringLocationID`, `MonitoringLocationName`, `MonitoringLocationLatitude`, `MonitoringLocationLongitude`, `MonitoringLocationHorizontalCoordinateReferenceSystem`, `MonitoringLocationHorizontalAccuracyMeasure`, `MonitoringLocationHorizontalAccuracyUnit`, `MonitoringLocationVerticalMeasure`, `MonitoringLocationVerticalUnit`, `MonitoringLocationType`, `ActivityType`, `ActivityMediaName`, `ActivityStartDate`, `ActivityStartTime`, `ActivityEndDate`, `ActivityEndTime`, `ActivityDepthHeightMeasure`, `ActivityDepthHeightUnit`, `SampleCollectionEquipmentName`, `CharacteristicName`, `MethodSpeciation`, `ResultSampleFraction`, `ResultValue`, `ResultUnit`, `ResultValueType`, `ResultDetectionCondition`, `ResultDetectionQuantitationLimitMeasure`, `ResultDetectionQuantitationLimitUnit`, `ResultDetectionQuantitationLimitType`, `ResultStatusID`, `ResultComment`, `ResultAnalyticalMethodID`, `ResultAnalyticalMethodContext`, `ResultAnalyticalMethodName`, `AnalysisStartDate`, `AnalysisStartTime`, `AnalysisStartTimeZone`, `LaboratoryName`, `LaboratorySampleID`
-  - Filter By:  `DOI`, `MonitoringLocationType`, `ActivityStartYear`, `ActivityMediaName`, `CharacteristicName`, `RegionId`, `LocationId`
-<!--  - Order By: `Id`, `ActivityStartDate`, `ActivityStartTime` -->
+  - Filter By: `DOI`, `LocationId`, `ActivityMediaName`, `ActivityGroupType`, `CharacteristicName`, `MonitoringLocationType`, `ActivityStartYear`, `RegionId`
 
 
  
