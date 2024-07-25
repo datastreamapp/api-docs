@@ -38,13 +38,13 @@ Remember that your API key is for your use only. Please do not share your API ke
 - **GET /Metadata**
   - Retrieves the dataset-level metadata for the datasets that meet your query criteria.   
   - Select By: `DOI`, `Version`, `DatasetName`, `DataStewardEmail`, `DataCollectionOrganization`, `DataUploadOrganization`, `ProgressCode`, `MaintenanceFrequencyCode`, `Abstract`, `DataCollectionInformation`, `DataProcessing`, `FundingSources`, `DataSourceURL`, `OtherDataSources`, `Citation`,   `Licence`, `Disclaimer`, `TopicCategoryCode`, `Keywords`, `CreateTimestamp`
-  - Filter By: `DOI`, `DatasetName`, `RegionId`, `MonitoringLocationType`, `Latitude`, `Longitude`, `LatitudeNormalized`, `LongitudeNormalized`,  `CreateTimestamp`
+  - Filter By: `DOI`, `DatasetName`,  `MonitoringLocationType`,  `CreateTimestamp`, `RegionId`, `LatitudeNormalized`\*, `LongitudeNormalized`\*
 <!--  - Order By: `DatasetName`, `CreateTimestamp` -->
 
 - **GET /Locations**
   - Retrieves the location information that meets your query criteria.
   - Select By: `Id`, `DOI`, `ID` (Maps to `MonitoringLocationID` internally), `Name`, `Latitude`, `Longitude`, `HorizontalCoordinateReferenceSystem`, `HorizontalAccuracyMeasure`, `HorizontalAccuracyUnit`, `VerticalMeasure`, `VerticalUnit`, `MonitoringLocationType`, `LatitudeNormalized`\*, `LongitudeNormalized`\*, `HorizontalCoordinateReferenceSystemNormalized`\*
-  - Filter By: `Id`, `DOI`, `MonitoringLocationType`, `ActivityStartYear`, `ActivityMediaName`, `CharacteristicName`, `RegionId`, `Name`, `LatitudeNormalized`\*, `LongitudeNormalized`\*
+  - Filter By: `Id`, `DOI`, `Name`, `MonitoringLocationType`, `ActivityStartYear`, `ActivityMediaName`, `CharacteristicName`, `RegionId`,  `LatitudeNormalized`\*, `LongitudeNormalized`\*
 <!--  - Order By: `Id`, `Name` -->
 
 - **GET /Observations**
