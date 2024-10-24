@@ -23,7 +23,7 @@ We have built modules to wrap around our API to make it easier to use.
 
 For those building their own implementation, here are some key things to keep in mind:
 - Querystring parameters must be URL encoded. All languages should have a function to do this.
-- Requests to Observations/Records that you expect a large amount (>1M) of data from should be partitioned. We recommend by Monitoring locations and/or activity start year. There is a technical database reason for this that you're welcome to ask us about.
+- Requests to Observations/Records that you expect a large amount (>1M rows) of data from should be partitioned. We recommend by Monitoring locations and/or activity start year. There is a technical database reason for this that you're welcome to ask us about.
 - Each request partition should be paginated over using the `Link` header or `@odata.nextLink` within the body of the response.
 - Rate limit yourself (2/sec) and don't make requests in parallel. This will ensure you don't get `403 Unauthorized` responses.
 - Use HTTP/3
