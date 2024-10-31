@@ -106,7 +106,7 @@ OData accepts certain query parameters. The ones supported by this API are:
   - Example: `$skip=10`
 -->
 
-When building an integration with any API, it's important to URL encode all query string parameters.
+When building an integration with any API, it's important to URL encode all query string parameters. the following characters do not need to be encoded: `A–Z a–z 0–9 - _ . ! ~ * ' ( )`.
 
 ### Performance Tips
 - Using `$select` to request only the parameters you need will decrease the amount of data needed to be transfer.
