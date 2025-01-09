@@ -25,7 +25,7 @@ For those building their own implementation, here are some key things to keep in
 - Querystring parameters must be URL encoded. All languages should have a function to do this.
 - Requests to Observations/Records that you expect a large amount (>1M rows) of data from should be partitioned. We recommend by Monitoring locations and/or activity start year. There is a technical database reason for this that you're welcome to ask us about.
 - Each request partition should be paginated over using the `Link` header or `@odata.nextLink` within the body of the response.
-- Rate limit yourself (2/sec) and don't make requests in parallel. This will ensure you don't get `403 Unauthorized` responses.
+- Rate limit yourself (2 reqs/sec) and don't make requests in parallel. This will ensure you don't get `429 Too Many Requests` error response.
 - Use HTTP/3
 
 ## Endpoints
@@ -179,11 +179,14 @@ curl -G -H 'x-api-key: PRIVATE-API-KEY' \
 ```
 
 ## Errors
+### 408 or 504 Timeout
+This means your request was too complicated and was unable to complete within 30sec. Lowering `$top` and/or adding in narrower filtering should resolve this issue.
+
 ### 413 Payload Too Large
 This means your request result was too large. Lowering `$top` or only requesting the values you need should resolve this issue.
 
-### 408 or 504 Timeout
-This means your request was too complicated and was unable to complete within 30sec. Lowering `$top` and/or adding in narrower filtering should resolve this issue.
+### 429 Too Many Requests
+This status code indicates that the client has sent too many requests in a given amount of time. To resolve this issue, rate limit yourself (2 reqs/sec) and don't make requests in parallel.
 
 ## Disclaimer
 We are currently in a Beta, changes will happen. We will do our best effort to keep you informed of any breaking changes.
