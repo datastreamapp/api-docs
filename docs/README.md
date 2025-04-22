@@ -98,6 +98,7 @@ OData accepts certain query parameters. The ones supported by this API are:
   - Return only the count for the request. When the value is large enough it becomes an estimate (~0.0005% accurate)
   - Example: `$count=true`
   - Default: `false`
+  - *Note: Unlike raw data retrieval, `$count=true` is not paginated and will not automatically iterate over locations. This can result in 408 or 413 error codes for large queries. Lowering `$top` will not resolve these errors. Instead, add narrower filters (e.g., LocationId, CharacteristicName, ActivityStartYear)*
 <!--
 - **$orderby**
   - Fields to order by are entered comma delimited.
