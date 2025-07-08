@@ -179,6 +179,10 @@ curl -G -H 'x-api-key: PRIVATE-API-KEY' \
 ```
 
 ## Errors
+
+### 400 `{"message":null}`
+This mean your request was deneid before reaching our service. This happens when the query string is not encode properly. ie `$` -> `%24`.
+
 ### 408 or 504 Timeout
 This means your request was too complicated and was unable to complete within 30sec. Lowering `$top` and/or adding in narrower filtering should resolve this issue.
 
