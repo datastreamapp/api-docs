@@ -184,7 +184,7 @@ curl -G -H 'x-api-key: PRIVATE-API-KEY' \
 This mean your request was denied before reaching our service. This happens when the query string is not encoded properly. ie `$` -> `%24`.
 
 ### 408 or 504 Timeout
-This means your request was too complicated and was unable to complete within 30sec. Lowering `$top` and/or adding in narrower filtering should resolve this issue.
+This means your request was too complicated and was unable to complete within 30sec. To resolve this issue, retry once. If the issue persists, try lowering the `$top` and/or adding in narrower filters. 
 
 ### 413 Payload Too Large
 This means your request result was too large. Lowering `$top` or only requesting the values you need should resolve this issue.
