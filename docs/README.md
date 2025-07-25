@@ -84,7 +84,7 @@ OData accepts certain query parameters. The ones supported by this API are:
     - RegionId Values (these values are subject to change):
       - Partner Hubs: `hub.{atlantic,greatlakes,lakewinnipeg,mackenzie,pacific}`
       - Countries: `admin.2.{ca}`
-      - Provinces/Territories/States: `admin.4.ca.{ab,bc,mb,nb,nl,ns,nt,nu.on,pe,,qc,sk,yt}`
+      - Provinces/Territories/States: `admin.4.ca.{ab,bc,mb,nb,nl,ns,nt,nu,on,pe,qc,sk,yt}`
     - Bounding box `$filter=LongitudeNormalized gt '-102.01' and LongitudeNormalized lt '-88.99' and LatitudeNormalized gt '49' and LatitudeNormalized lt '60'`
   <!-- - Functions: `$filter=contains(DOI, 'xxxx')`, `$filter=startwith(DOI, 'xxxx')`, `$filter=endswith(DOI, 'xxxx-xxxx')` -->
 - **$top**
@@ -98,6 +98,7 @@ OData accepts certain query parameters. The ones supported by this API are:
   - Return only the count for the request. When the value is large enough it becomes an estimate (~0.0005% accurate)
   - Example: `$count=true`
   - Default: `false`
+  - *Note: Unlike raw data retrieval, `$count=true` is not paginated and will not automatically iterate over locations. This can result in 408 or 413 error codes for large queries. Lowering `$top` will not resolve these errors. Instead, add narrower filters (e.g., LocationId, CharacteristicName, ActivityStartYear)*
 <!--
 - **$orderby**
   - Fields to order by are entered comma delimited.
