@@ -135,6 +135,43 @@ curl -G -H 'x-api-key: PRIVATE-API-KEY' \
      --data-urlencode "\$filter=endswith(DOI, 'xxxx-xxxx')" \
 ```
 
+**Sample Response**
+```json
+{
+    "value": [
+        {
+            "Id": "000000ab-000a-00a0-0aba-0ab00abc0a0a",
+            "DOI": "10.25976/xxxx-xx00",
+            "Version": "1.0.0",
+            "DatasetName": "Sample Dataset A",
+            "DataStewardEmail": "example@example.com",
+            "DataCollectionOrganization": "Sample Organization A",
+            "DataUploadOrganization": "Sample Organization B",
+            "ProgressCode": "onGoing",
+            "MaintenanceFrequencyCode": "asNeeded",
+            "Abstract": "Sample Description",
+            "DataCollectionInformation": "Sample Data Collection Information",
+            "FundingSources": "Sample Funder A",
+            "DataSourceURL": null,
+            "OtherDataSources": "",
+            "Citation": "Sample Organization A. 2024. \"Sample Dataset A\" (dataset). 1.0.0. DataStream. https://doi.org/10.25976/xxxx-xx00.",
+            "Licence": "https://opendatacommons.org/licenses/by/1-0/",
+            "Disclaimer": "",
+            "TopicCategoryCode": [
+                "inlandWaters"
+            ],
+            "Keywords": [
+                "Water quality",
+                "temperature"
+            ],
+            "CreateTimestamp": "2020-01-01T15:30:00.000Z",
+            "PublishedTimestamp": "2024-01-01T15:30:00.000Z"
+        }
+    ],
+    "@odata.nextLink": "https://api.datastream.org/v1/odata/v4/Metadata?$skiptoken=Id:000000ab-000a-00a0-0aba-0ab00abc0a0a&$top=1000"
+}
+```
+
 ### Locations
 
 #### Get Locations from a dataset
@@ -151,6 +188,29 @@ curl -G -H 'x-api-key: PRIVATE-API-KEY' \
      --data-urlencode "\$filter=DOI in ('10.25976/xxxx-xx00', '10.25976/xxxx-xx00', '10.25976/xxxx-xx00')"
 ```
 
+**Sample Response**
+```json
+{
+    "value": [
+        {
+            "Id": 99999,
+            "DOI": "10.25976/xxxx-xx00",
+            "ID": "ABC123",
+            "Name": "Sample Location A",
+            "Latitude": 51.01,
+            "Longitude": -144.01,
+            "HorizontalCoordinateReferenceSystem": "WGS84",
+            "HorizontalAccuracyMeasure": null,
+            "HorizontalAccuracyUnit": null,
+            "VerticalMeasure": null,
+            "VerticalUnit": null,
+            "MonitoringLocationType": "River/Stream"
+        }
+    ],
+    "@odata.nextLink": "https://api.datastream.org/v1/odata/v4/Locations?$skiptoken=Id:99999&$top=1000"
+}
+```
+
 ### Observations
 
 #### Get Temperature and pH observations from multiple datasets
@@ -165,6 +225,109 @@ curl -G -H 'x-api-key: PRIVATE-API-KEY' \
 curl -G -H 'x-api-key: PRIVATE-API-KEY' \
      https://api.datastream.org/v1/odata/v4/Observations \
      --data-urlencode "\$filter=CharacteristicName eq 'pH' and RegionId eq 'admin.4.ca.ab'"
+```
+
+**Sample Response**
+
+```json
+{
+    "value": [
+        {
+            "Id": 99999,
+            "DOI": "10.25976/xxxx-xx00",
+            "LocationId": 999,
+            "ActivityType": "Field Msr/Obs-Portable Data Logger",
+            "ActivityMediaName": "Surface Water",
+            "ActivityStartDate": "2020-01-01",
+            "ActivityStartTime": "15:30:00",
+            "ActivityStartTimeZone": null,
+            "ActivityEndDate": null,
+            "ActivityEndTime": null,
+            "ActivityEndTimeZone": null,
+            "ActivityDepthHeightMeasure": -0.25,
+            "ActivityDepthHeightUnit": "m",
+            "SampleCollectionEquipmentName": null,
+            "CharacteristicName": "Dissolved oxygen saturation",
+            "MethodSpeciation": null,
+            "ResultSampleFraction": null,
+            "ResultValue": 97,
+            "ResultUnit": "%",
+            "ResultValueType": null,
+            "ResultDetectionCondition": null,
+            "ResultDetectionQuantitationLimitUnit": null,
+            "ResultDetectionQuantitationLimitMeasure": null,
+            "ResultDetectionQuantitationLimitType": null,
+            "ResultStatusID": null,
+            "ResultComment": null,
+            "ResultAnalyticalMethodID": null,
+            "ResultAnalyticalMethodContext": null,
+            "ResultAnalyticalMethodName": null,
+            "AnalysisStartDate": null,
+            "AnalysisStartTime": null,
+            "AnalysisStartTimeZone": null,
+            "LaboratoryName": null,
+            "LaboratorySampleID": null
+        }
+    ],
+    "@odata.nextLink": "https://api.datastream.org/v1/odata/v4/Observations?$skiptoken=Id:99999&$top=1000"
+}
+```
+
+### Records
+
+**Sample Response**
+```json
+{
+    "value": [
+        {
+            "Id": 99999,
+            "DOI": "10.25976/xxxx-xx00",
+            "DatasetName": "Sample Dataset Name A",
+            "MonitoringLocationID": "ABC123",
+            "MonitoringLocationName": "Sample Location Name A",
+            "MonitoringLocationLatitude": 51.01,
+            "MonitoringLocationLongitude": -144.01,
+            "MonitoringLocationHorizontalCoordinateReferenceSystem": "WGS84",
+            "MonitoringLocationHorizontalAccuracyMeasure": null,
+            "MonitoringLocationHorizontalAccuracyUnit": null,
+            "MonitoringLocationVerticalMeasure": null,
+            "MonitoringLocationVerticalUnit": null,
+            "MonitoringLocationType": "River/Stream",
+            "ActivityType": "Field Msr/Obs-Portable Data Logger",
+            "ActivityMediaName": "Surface Water",
+            "ActivityStartDate": "2010-01-01",
+            "ActivityStartTime": "15:30:00",
+            "ActivityStartTimeZone": null,
+            "ActivityEndDate": null,
+            "ActivityEndTime": null,
+            "ActivityEndTimeZone": null,
+            "ActivityDepthHeightMeasure": -0.25,
+            "ActivityDepthHeightUnit": "m",
+            "SampleCollectionEquipmentName": null,
+            "CharacteristicName": "Dissolved oxygen saturation",
+            "MethodSpeciation": null,
+            "ResultSampleFraction": null,
+            "ResultValue": 97,
+            "ResultUnit": "%",
+            "ResultValueType": null,
+            "ResultDetectionCondition": null,
+            "ResultDetectionQuantitationLimitMeasure": null,
+            "ResultDetectionQuantitationLimitUnit": null,
+            "ResultDetectionQuantitationLimitType": null,
+            "ResultStatusID": null,
+            "ResultComment": null,
+            "ResultAnalyticalMethodID": null,
+            "ResultAnalyticalMethodContext": null,
+            "ResultAnalyticalMethodName": null,
+            "AnalysisStartDate": null,
+            "AnalysisStartTime": null,
+            "AnalysisStartTimeZone": null,
+            "LaboratoryName": null,
+            "LaboratorySampleID": null
+        }
+    ],
+    "@odata.nextLink": "https://api.datastream.org/v1/odata/v4/Records?$skiptoken=Id:99999&$top=1000"
+}
 ```
 
 ## Response Format
