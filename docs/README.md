@@ -33,7 +33,9 @@ You can test out your script by prefixing `https://api.qa.datastream.org/v1/odat
 When you're ready to pull data from the production system you can use: `https://api.datastream.org/v1/odata/v4`.
 For browser requests all you need to do is let us know your domain name and we can add it to the CORS whitelist, only GET requests are supported. All other application should store the API Key in the header `x-api-key`.
 
-Remember that your API key is for your use only. Please do not share your API key. If it does become public, please let us know, we can give you a new one.
+> [!Note]
+> Remember that your API key is for your use only. Please do not share your API key.
+> If it does become public, please let us know, we can give you a new one.
 
 - **GET /Metadata**
   - Retrieves the dataset-level metadata for the datasets that meet your query criteria.   
@@ -109,7 +111,7 @@ OData accepts certain query parameters. The ones supported by this API are:
 When building an integration with any API, it's important to encode all query string parameters.
 
 ### Performance Tips
-- Using `$select` to request only the parameters you need will decrease the amount of data needed to be transfer.
+- Using `$select` to request only the parameters you need will decrease the amount of data needed to be transferred.
 <!--
 - Using large `$skip` values can be slow (it's a database thing), slicing your data by `GeometryId` and/or `CharacteristicName` will help prevent this.
 - Don't use `$orderby` unless you plan to pull a smaller number of results.
@@ -344,7 +346,7 @@ curl -G -H 'x-api-key: PRIVATE-API-KEY' \
 ## Errors
 
 ### 400 Bad Request: `{"message":null}`
-This mean your request was denied before reaching our service. This happens when the query string is not encoded properly. ie `$` -> `%24`.
+This means your request was denied before reaching our service. This happens when the query string is not encoded properly. ie `$` -> `%24`.
 
 ### 408 or 504 Timeout
 This means your request was too complicated and was unable to complete within 30sec. To resolve this issue, retry once. If the issue persists, try lowering the `$top` and/or adding in narrower filters. 
