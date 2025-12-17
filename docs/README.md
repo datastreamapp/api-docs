@@ -84,7 +84,7 @@ OData accepts certain query parameters. The ones supported by this API are:
   - Spatial: `$filter=RegionId eq 'hub.atlantic'`
     - RegionId Values (these values are subject to change):
       - Partner Hubs: `hub.{atlantic,greatlakes,lakewinnipeg,mackenzie,pacific}`
-      - Countries: admin.2.{ca}
+      - Countries: `admin.2.{ca}`
       - Provinces/Territories/States: `admin.4.ca.{ab,bc,mb,nb,nl,ns,nt,nu.on,pe,,qc,sk,yt}`
     - Bounding box `$filter=Longitude gt '-102.01' and Longitude lt '-88.99' and Latitude gt '49' and Latitude lt '60'`
   <!-- - Functions: `$filter=contains(DOI, 'xxxx')`, `$filter=startwith(DOI, 'xxxx')`, `$filter=endswith(DOI, 'xxxx-xxxx')` -->
