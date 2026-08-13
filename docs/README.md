@@ -39,8 +39,9 @@ For browser requests all you need to do is let us know your domain name and we c
 
 - **GET /Metadata**
   - Retrieves the dataset-level metadata for the datasets that meet your query criteria.   
-  - Select By: `DOI`, `Version`, `DatasetName`, `DataStewardEmail`, `DataCollectionOrganization`, `DataUploadOrganization`, `ProgressCode`, `MaintenanceFrequencyCode`, `Abstract`, `DataCollectionInformation`, `DataProcessing`, `FundingSources`, `DataSourceURL`, `OtherDataSources`, `Citation`,   `Licence`, `Disclaimer`, `TopicCategoryCode`, `Keywords`, `CreateTimestamp`, `PublishedTimestamp`
+  - Select By: `DOI`, `Version`, `DatasetName`, `DataStewardEmail`, `DataCollectionOrganization`, `DataUploadOrganization`, `ProgressCode`, `MaintenanceFrequencyCode`, `Abstract`, `DataCollectionInformation`, `DataProcessing`, `FundingSources`, `DataSourceURL`, `OtherDataSources`, `Citation`,   `Licence`, `Disclaimer`, `TopicCategoryCode`, `Keywords`, `CreateTimestamp`, `PublishedTimestamp`, `TemporalExtent`
   - Filter By: `DOI`, `LocationId`, `ActivityMediaName`, `ActivityGroupType`, `CharacteristicName`, `MonitoringLocationType`, `ActivityStartYear`, `RegionId`, `DatasetName`, `CreateTimestamp`
+  - `TemporalExtent` is the `["YYYY-MM-DD", "YYYY-MM-DD"]` range of activity start dates covered by the dataset. It is not filterable, but its years can bound `ActivityStartYear` filters on subsequent `/Locations`, `/Observations`, or `/Records` requests.
 
 - **GET /Locations**
   - Retrieves the location information that meets your query criteria.
@@ -152,6 +153,7 @@ curl -G -H 'x-api-key: PRIVATE-API-KEY' \
             "MaintenanceFrequencyCode": "asNeeded",
             "Abstract": "Sample Description",
             "DataCollectionInformation": "Sample Data Collection Information",
+            "DataProcessing": "Sample Data Processing Information",
             "FundingSources": "Sample Funder A",
             "DataSourceURL": null,
             "OtherDataSources": "",
@@ -166,7 +168,8 @@ curl -G -H 'x-api-key: PRIVATE-API-KEY' \
                 "temperature"
             ],
             "CreateTimestamp": "2020-01-01T15:30:00.000Z",
-            "PublishedTimestamp": "2024-01-01T15:30:00.000Z"
+            "PublishedTimestamp": "2024-01-01T15:30:00.000Z",
+            "TemporalExtent": ["2020-01-01", "2024-01-01"]
         }
     ],
     "@odata.nextLink": "https://api.datastream.org/v1/odata/v4/Metadata?$skiptoken=Id:000000ab-000a-00a0-0aba-0ab00abc0a0a&$top=1000"
