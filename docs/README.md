@@ -37,6 +37,8 @@ For browser requests all you need to do is let us know your domain name and we c
 > Remember that your API key is for your use only. Please do not share your API key.
 > If it does become public, please let us know, we can give you a new one.
 
+A machine-readable [OpenAPI specification](openapi/openapischema.json) of these endpoints is also available.
+
 - **GET /Metadata**
   - Retrieves the dataset-level metadata for the datasets that meet your query criteria.   
   - Select By: `DOI`, `Version`, `DatasetName`, `DataStewardEmail`, `DataCollectionOrganization`, `DataUploadOrganization`, `ProgressCode`, `MaintenanceFrequencyCode`, `Abstract`, `DataCollectionInformation`, `DataProcessing`, `FundingSources`, `DataSourceURL`, `OtherDataSources`, `Citation`,   `Licence`, `Disclaimer`, `TopicCategoryCode`, `Keywords`, `CreateTimestamp`, `PublishedTimestamp`, `TemporalExtent`

@@ -1,600 +1,1061 @@
 {
-  "openapi": "3.0.0",
+  "openapi": "3.0.3",
   "info": {
-    "description": "Public Datastream API",
-    "title": "datastream-api-public",
-    "version": "1.0.0"
+    "title": "DataStream Public API",
+    "description": "OData v4 API for querying environmental water quality data.",
+    "version": "1.0.0",
+    "license": { "name": "MIT", "url": "https://opensource.org/license/mit/" }
   },
+  "servers": [
+    {
+      "url": "https://api.datastream.org/v1/odata/v4",
+      "description": "production"
+    },
+    {
+      "url": "https://api.qa.datastream.org/v1/odata/v4",
+      "description": "testing"
+    }
+  ],
   "paths": {
-    "v1/odata/v4/Metadata": {
+    "/Metadata": {
       "get": {
+        "operationId": "getMetadata",
+        "summary": "Query dataset metadata",
+        "security": [{ "apiKey": [] }],
+        "parameters": [
+          {
+            "name": "$select",
+            "in": "query",
+            "required": false,
+            "description": "Comma-delimited list of fields. Allowed: Id, DOI, Version, DatasetName, DataStewardEmail, DataCollectionOrganization, DataUploadOrganization, ProgressCode, MaintenanceFrequencyCode, Abstract, DataCollectionInformation, DataProcessing, FundingSources, DataSourceURL, OtherDataSources, Citation, Licence, Disclaimer, TopicCategoryCode, Keywords, CreateTimestamp, PublishedTimestamp, TemporalExtent. Default: all allowed fields.",
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "$filter",
+            "in": "query",
+            "required": false,
+            "description": "OData filter expression. Filterable properties: DOI, LocationId, ActivityMediaName, ActivityGroupType, CharacteristicName, MonitoringLocationType, ActivityStartDateYear, ActivityStartYear, RegionId, Latitude, Longitude, LatitudeNormalized, LongitudeNormalized, DatasetName, CreateTimestamp. Operators: in, eq, lt, gt, lte, gte, ne, and.",
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "$top",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 10000,
+              "default": 10
+            }
+          },
+          {
+            "name": "$count",
+            "in": "query",
+            "required": false,
+            "description": "Return only the count of matching rows (an estimate for large counts).",
+            "schema": { "type": "boolean", "default": false }
+          },
+          {
+            "name": "$skiptoken",
+            "in": "query",
+            "required": false,
+            "description": "Cursor for pagination, e.g. Id:1234. Use the Link header or @odata.nextLink from the previous response.",
+            "schema": { "type": "string" }
+          }
+        ],
         "responses": {
           "200": {
+            "description": "successful operation",
             "content": {
               "application/json": {
-                "schema": {
-                  "items": {
-                    "$ref": "#/components/schemas/GetMetadata"
-                  },
-                  "type": "String"
-                }
+                "schema": { "$ref": "#/components/schemas/GetMetadata" }
               }
-            },
-            "description": "successful operation"
+            }
+          },
+          "400": {
+            "description": "Bad request — invalid query (unknown $select/$filter field, malformed expression, or unencoded reserved characters such as $ in parameter names)"
+          },
+          "401": { "description": "Missing API key" },
+          "403": { "description": "Invalid API key" },
+          "408": {
+            "description": "Request timed out (30s) — retry once; if it persists, lower $top and/or add narrower filters"
+          },
+          "413": {
+            "description": "Response too large — lower $top or $select fewer fields"
+          },
+          "429": {
+            "description": "Too many requests — rate limit yourself (2 req/s, no parallel requests)"
+          },
+          "504": {
+            "description": "Request timed out (30s) — retry once; if it persists, lower $top and/or add narrower filters"
           }
-        },
-        "tags": [
-          "Dataset"
-        ]
-      },
-      "patch": {
-        "responses": {
-          "200": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "items": {
-                    "$ref": "#/components/schemas/PatchMetadata"
-                  },
-                  "type": "String"
-                }
-              }
-            },
-            "description": "successful operation"
-          }
-        },
-        "tags": [
-          "Dataset"
-        ]
-      },
-      "post": {
-        "responses": {
-          "200": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "items": {
-                    "$ref": "#/components/schemas/PostMetadata"
-                  },
-                  "type": "String"
-                }
-              }
-            },
-            "description": "successful operation"
-          }
-        },
-        "tags": [
-          "Dataset"
-        ]
+        }
       }
     },
-    "v1/odata/v4/Locations": {
+    "/Locations": {
       "get": {
+        "operationId": "getLocations",
+        "summary": "Query monitoring locations",
+        "security": [{ "apiKey": [] }],
+        "parameters": [
+          {
+            "name": "$select",
+            "in": "query",
+            "required": false,
+            "description": "Comma-delimited list of fields. Allowed: Id, DOI, ID, Name, Latitude, Longitude, HorizontalCoordinateReferenceSystem, HorizontalAccuracyMeasure, HorizontalAccuracyUnit, VerticalMeasure, VerticalUnit, MonitoringLocationType, LatitudeNormalized, LongitudeNormalized, HorizontalCoordinateReferenceSystemNormalized. Default: Id, DOI, ID, Name, Latitude, Longitude, HorizontalCoordinateReferenceSystem, HorizontalAccuracyMeasure, HorizontalAccuracyUnit, VerticalMeasure, VerticalUnit, MonitoringLocationType.",
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "$filter",
+            "in": "query",
+            "required": false,
+            "description": "OData filter expression. Filterable properties: DOI, LocationId, ActivityMediaName, ActivityGroupType, CharacteristicName, MonitoringLocationType, ActivityStartDateYear, ActivityStartYear, RegionId, Latitude, Longitude, LatitudeNormalized, LongitudeNormalized, Name. Operators: in, eq, lt, gt, lte, gte, ne, and.",
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "$top",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 10000,
+              "default": 10
+            }
+          },
+          {
+            "name": "$count",
+            "in": "query",
+            "required": false,
+            "description": "Return only the count of matching rows (an estimate for large counts).",
+            "schema": { "type": "boolean", "default": false }
+          },
+          {
+            "name": "$skiptoken",
+            "in": "query",
+            "required": false,
+            "description": "Cursor for pagination, e.g. Id:1234. Use the Link header or @odata.nextLink from the previous response.",
+            "schema": { "type": "string" }
+          }
+        ],
         "responses": {
           "200": {
+            "description": "successful operation",
             "content": {
               "application/json": {
-                "schema": {
-                  "items": {
-                    "$ref": "#/components/schemas/GetLocations"
-                  },
-                  "type": "String"
-                }
+                "schema": { "$ref": "#/components/schemas/GetLocations" }
               }
-            },
-            "description": "successful operation"
+            }
+          },
+          "400": {
+            "description": "Bad request — invalid query (unknown $select/$filter field, malformed expression, or unencoded reserved characters such as $ in parameter names)"
+          },
+          "401": { "description": "Missing API key" },
+          "403": { "description": "Invalid API key" },
+          "408": {
+            "description": "Request timed out (30s) — retry once; if it persists, lower $top and/or add narrower filters"
+          },
+          "413": {
+            "description": "Response too large — lower $top or $select fewer fields"
+          },
+          "429": {
+            "description": "Too many requests — rate limit yourself (2 req/s, no parallel requests)"
+          },
+          "504": {
+            "description": "Request timed out (30s) — retry once; if it persists, lower $top and/or add narrower filters"
           }
-        },
-        "tags": [
-          "Location"
-        ]
+        }
       }
     },
-    "v1/odata/v4/Observations": {
+    "/Observations": {
       "get": {
+        "operationId": "getObservations",
+        "summary": "Query observations",
+        "security": [{ "apiKey": [] }],
+        "parameters": [
+          {
+            "name": "$select",
+            "in": "query",
+            "required": false,
+            "description": "Comma-delimited list of fields. Allowed: Id, DOI, LocationId, CharacteristicName, ActivityType, ActivityMediaName, ActivityStartDate, ActivityStartTime, ActivityStartTimeZone, ActivityEndDate, ActivityEndTime, ActivityEndTimeZone, ActivityDepthHeightMeasure, ActivityDepthHeightUnit, SampleCollectionEquipmentName, MethodSpeciation, ResultSampleFraction, ResultValue, ResultUnit, ResultValueType, ResultDetectionCondition, ResultDetectionQuantitationLimitUnit, ResultDetectionQuantitationLimitMeasure, ResultDetectionQuantitationLimitType, ResultStatusID, ResultComment, ResultAnalyticalMethodID, ResultAnalyticalMethodContext, ResultAnalyticalMethodName, AnalysisStartDate, AnalysisStartTime, AnalysisStartTimeZone, LaboratoryName, LaboratorySampleID. Default: all allowed fields.",
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "$filter",
+            "in": "query",
+            "required": false,
+            "description": "OData filter expression. Filterable properties: DOI, LocationId, ActivityMediaName, ActivityGroupType, CharacteristicName, MonitoringLocationType, ActivityStartDateYear, ActivityStartYear, RegionId. Operators: in, eq, lt, gt, lte, gte, ne, and.",
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "$top",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 10000,
+              "default": 10
+            }
+          },
+          {
+            "name": "$count",
+            "in": "query",
+            "required": false,
+            "description": "Return only the count of matching rows (an estimate for large counts).",
+            "schema": { "type": "boolean", "default": false }
+          },
+          {
+            "name": "$skiptoken",
+            "in": "query",
+            "required": false,
+            "description": "Cursor for pagination, e.g. Id:1234. Use the Link header or @odata.nextLink from the previous response.",
+            "schema": { "type": "string" }
+          }
+        ],
         "responses": {
           "200": {
+            "description": "successful operation",
             "content": {
               "application/json": {
-                "schema": {
-                  "items": {
-                    "$ref": "#/components/schemas/GetObservations"
-                  },
-                  "type": "String"
-                }
+                "schema": { "$ref": "#/components/schemas/GetObservations" }
               }
-            },
-            "description": "successful operation"
+            }
+          },
+          "400": {
+            "description": "Bad request — invalid query (unknown $select/$filter field, malformed expression, or unencoded reserved characters such as $ in parameter names)"
+          },
+          "401": { "description": "Missing API key" },
+          "403": { "description": "Invalid API key" },
+          "408": {
+            "description": "Request timed out (30s) — retry once; if it persists, lower $top and/or add narrower filters"
+          },
+          "413": {
+            "description": "Response too large — lower $top or $select fewer fields"
+          },
+          "429": {
+            "description": "Too many requests — rate limit yourself (2 req/s, no parallel requests)"
+          },
+          "504": {
+            "description": "Request timed out (30s) — retry once; if it persists, lower $top and/or add narrower filters"
           }
-        },
-        "tags": [
-          "Observation"
-        ]
+        }
       }
     },
-    "v1/odata/v4/Records": {
+    "/Records": {
       "get": {
+        "operationId": "getRecords",
+        "summary": "Query records (CSV-oriented full rows)",
+        "security": [{ "apiKey": [] }],
+        "parameters": [
+          {
+            "name": "$select",
+            "in": "query",
+            "required": false,
+            "description": "Comma-delimited list of fields. Allowed: Id, DOI, DatasetName, MonitoringLocationID, MonitoringLocationName, MonitoringLocationLatitude, MonitoringLocationLongitude, MonitoringLocationHorizontalCoordinateReferenceSystem, MonitoringLocationHorizontalAccuracyMeasure, MonitoringLocationHorizontalAccuracyUnit, MonitoringLocationVerticalMeasure, MonitoringLocationVerticalUnit, MonitoringLocationType, ActivityType, ActivityMediaName, ActivityStartDate, ActivityStartTime, ActivityStartTimeZone, ActivityEndDate, ActivityEndTime, ActivityEndTimeZone, ActivityDepthHeightMeasure, ActivityDepthHeightUnit, SampleCollectionEquipmentName, CharacteristicName, MethodSpeciation, ResultSampleFraction, ResultValue, ResultUnit, ResultValueType, ResultDetectionCondition, ResultDetectionQuantitationLimitMeasure, ResultDetectionQuantitationLimitUnit, ResultDetectionQuantitationLimitType, ResultStatusID, ResultComment, ResultAnalyticalMethodID, ResultAnalyticalMethodContext, ResultAnalyticalMethodName, AnalysisStartDate, AnalysisStartTime, AnalysisStartTimeZone, LaboratoryName, LaboratorySampleID. Default: all allowed fields.",
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "$filter",
+            "in": "query",
+            "required": false,
+            "description": "OData filter expression. Filterable properties: DOI, LocationId, ActivityMediaName, ActivityGroupType, CharacteristicName, MonitoringLocationType, ActivityStartDateYear, ActivityStartYear, RegionId. Operators: in, eq, lt, gt, lte, gte, ne, and.",
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "$top",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 10000,
+              "default": 10
+            }
+          },
+          {
+            "name": "$count",
+            "in": "query",
+            "required": false,
+            "description": "Return only the count of matching rows (an estimate for large counts).",
+            "schema": { "type": "boolean", "default": false }
+          },
+          {
+            "name": "$skiptoken",
+            "in": "query",
+            "required": false,
+            "description": "Cursor for pagination, e.g. Id:1234. Use the Link header or @odata.nextLink from the previous response.",
+            "schema": { "type": "string" }
+          }
+        ],
         "responses": {
           "200": {
+            "description": "successful operation",
             "content": {
               "application/json": {
-                "schema": {
-                  "items": {
-                    "$ref": "#/components/schemas/GetRecords"
-                  },
-                  "type": "String"
-                }
+                "schema": { "$ref": "#/components/schemas/GetRecords" }
               }
-            },
-            "description": "successful operation"
+            }
+          },
+          "400": {
+            "description": "Bad request — invalid query (unknown $select/$filter field, malformed expression, or unencoded reserved characters such as $ in parameter names)"
+          },
+          "401": { "description": "Missing API key" },
+          "403": { "description": "Invalid API key" },
+          "408": {
+            "description": "Request timed out (30s) — retry once; if it persists, lower $top and/or add narrower filters"
+          },
+          "413": {
+            "description": "Response too large — lower $top or $select fewer fields"
+          },
+          "429": {
+            "description": "Too many requests — rate limit yourself (2 req/s, no parallel requests)"
+          },
+          "504": {
+            "description": "Request timed out (30s) — retry once; if it persists, lower $top and/or add narrower filters"
           }
-        },
-        "tags": [
-          "Record"
-        ]
-      }
-    },
-    "v1/odata/v4/Records": {
-      "delete": {
-        "responses": {
-          "200": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "items": {
-                    "$ref": "#/components/schemas/DeleteRecords"
-                  },
-                  "type": "String"
-                }
-              }
-            },
-            "description": "successful operation"
-          }
-        },
-        "tags": [
-          "Record"
-        ]
-      }
-    },
-    "v1/odata/v4/Records": {
-      "post": {
-        "responses": {
-          "200": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "items": {
-                    "$ref": "#/components/schemas/PostRecords"
-                  },
-                  "type": "String"
-                }
-              }
-            },
-            "description": "successful operation"
-          }
-        },
-        "tags": [
-          "Record"
-        ]
+        }
       }
     }
   },
   "components": {
+    "securitySchemes": {
+      "apiKey": { "type": "apiKey", "in": "header", "name": "x-api-key" }
+    },
     "schemas": {
       "GetMetadata": {
         "type": "object",
+        "additionalProperties": false,
         "properties": {
+          "odata.nextLink": {
+            "type": "string",
+            "pattern": "^https://api\\.datastream\\.org/v1/odata/v4/(Metadata|Locations|Observations|Records)\\??[a-zA-Z0-9\\._%&-]*$",
+            "maxLength": 256
+          },
+          "odata.count": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
           "value": {
             "type": "array",
             "items": {
               "type": "object",
+              "additionalProperties": false,
               "properties": {
-                "Id": {
-                  "type": "string"
-                },
-                "Name": {
-                  "type": "string"
-                },
-                "Abstract": {
-                  "type": "string"
-                },
-                "Citation": {
-                  "type": "string"
-                },
-                "DataStewardEmail": {
-                  "type": "string"
-                },
-                "DataCollectionOrganization": {
-                  "type": "string"
-                },
-                "DataCollectionInformation": {
-                  "type": "string"
-                },
-                "DataProcessing": {
-                  "type": "string"
-                },
-                "DataUploadOrganization": {
-                  "type": "string"
-                },
-                "DataSources": {
-                  "type": "string"
-                },
-                "FundingSources": {
-                  "type": "string"
-                },
-                "Licence": {
-                  "type": "string"
-                },
-                "Disclaimer": {
-                  "type": "string"
-                },
-                "Doi": {
-                  "type": "string"
-                },
-                "TopicCategories": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
-                },
-                "Keywords": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
+                "Id": { "type": "string", "format": "uuid", "maxLength": 36 },
+                "DOI": {
+                  "title": "Digital Object Identifier (DOI)",
+                  "type": "string",
+                  "pattern": "^10\\.(25976|81029)/[a-z0-9]{4}-[a-z0-9]{2}[0-9]{2}$",
+                  "minLength": 18,
+                  "maxLength": 18
                 },
                 "Version": {
-                  "type": "string"
+                  "type": "string",
+                  "pattern": "^[0-9]+.[0-9]+.[0-9]+$",
+                  "maxLength": 11
                 },
-                "CreateTimestamp": {
-                  "type": "string"
+                "DatasetName": { "type": "string" },
+                "DataStewardEmail": { "type": "string" },
+                "DataCollectionOrganization": { "type": "string" },
+                "DataUploadOrganization": { "type": "string" },
+                "ProgressCode": { "type": "string" },
+                "MaintenanceFrequencyCode": { "type": "string" },
+                "Abstract": { "type": "string" },
+                "DataCollectionInformation": { "type": "string" },
+                "DataProcessing": { "type": "string" },
+                "FundingSources": { "type": "string" },
+                "DataSourceURL": { "type": "string" },
+                "OtherDataSources": { "type": "string" },
+                "Citation": { "type": "string" },
+                "Licence": { "type": "string" },
+                "Disclaimer": { "type": "string" },
+                "TopicCategoryCode": { "type": "string" },
+                "Keywords": { "type": "string" },
+                "CreateTimestamp": { "type": "string" },
+                "PublishedTimestamp": { "type": "string" },
+                "TemporalExtent": {
+                  "type": "array",
+                  "items": { "type": "string", "format": "date" },
+                  "minItems": 2,
+                  "maxItems": 2,
+                  "nullable": true
                 }
               }
-            }
-          }
-        }
-      },
-      "PatchMetadata": {
-        "type": "object",
-        "properties": {
-          "value": {
-            "type": "object",
-            "properties": {
-              "Location": {
-                "type": "string"
-              }
-            }
-          }
-        }
-      },
-      "PostMetadata": {
-        "type": "object",
-        "properties": {
-          "value": {
-            "type": "object",
-            "properties": {
-              "Location": {
-                "type": "string"
-              }
-            }
+            },
+            "maxItems": 10000,
+            "uniqueItems": true
           }
         }
       },
       "GetLocations": {
         "type": "object",
+        "additionalProperties": false,
         "properties": {
+          "odata.nextLink": {
+            "type": "string",
+            "pattern": "^https://api\\.datastream\\.org/v1/odata/v4/(Metadata|Locations|Observations|Records)\\??[a-zA-Z0-9\\._%&-]*$",
+            "maxLength": 256
+          },
+          "odata.count": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
           "value": {
             "type": "array",
             "items": {
               "type": "object",
+              "additionalProperties": false,
               "properties": {
                 "Id": {
-                  "type": "string"
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9007199254740991
                 },
-                "DatasetId": {
-                  "type": "string"
+                "DOI": {
+                  "title": "Digital Object Identifier (DOI)",
+                  "type": "string",
+                  "pattern": "^10\\.(25976|81029)/[a-z0-9]{4}-[a-z0-9]{2}[0-9]{2}$",
+                  "minLength": 18,
+                  "maxLength": 18
                 },
-                "NameId": {
-                  "type": "string"
+                "ID": {
+                  "minLength": 1,
+                  "title": "Monitoring Location ID",
+                  "description": "Valid Monitoring ID; required for most Activity Type Codes; Must correspond to Monitoring Locations already in WQX/STORET or entered in Monitoring Locations tab",
+                  "type": "string",
+                  "maxLength": 55,
+                  "pattern": "^[\\p{L}\\p{N}\\p{P}\\p{M}\\p{S} ]+$"
                 },
                 "Name": {
-                  "type": "string"
+                  "minLength": 1,
+                  "title": "Monitoring Location Name",
+                  "description": "A geographically descriptive name",
+                  "type": "string",
+                  "maxLength": 255,
+                  "pattern": "^[\\p{L}\\p{N}\\p{P}\\p{M}\\p{S} ]+$"
                 },
                 "Latitude": {
-                  "type": "number"
+                  "title": "Monitoring Location Latitude",
+                  "description": "Latitude. Decimal 6-8 digits (i.e., 37)",
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 90
                 },
                 "Longitude": {
-                  "type": "number"
+                  "title": "Monitoring Location Longitude",
+                  "description": "Longitude. Decimal 6-9 digits (i.e., -74.75)",
+                  "type": "number",
+                  "minimum": -180,
+                  "maximum": 180
                 },
                 "HorizontalCoordinateReferenceSystem": {
-                  "type": "string"
+                  "title": "Horizontal Reference Datum",
+                  "description": "Controlled vocabulary (6 values at generation time); maintained in @datastreamapp/data-schema and changes with schema updates.",
+                  "type": "string",
+                  "maxLength": 5
+                },
+                "HorizontalAccuracyMeasure": {
+                  "title": "Activity Horizontal Accuracy Measure",
+                  "description": "The horizontal measure indicating the relative accuracy of the latitude and longitude coordinates",
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 9007199254740991
+                },
+                "HorizontalAccuracyUnit": {
+                  "title": "Measurement Unit",
+                  "description": "Controlled vocabulary (2 values at generation time); maintained in @datastreamapp/data-schema and changes with schema updates.",
+                  "type": "string",
+                  "maxLength": 2
+                },
+                "VerticalMeasure": {
+                  "title": "Vertical Measure",
+                  "description": "The measure of elevation (i.e., the altitude), above or below a reference datum.",
+                  "type": "number",
+                  "minimum": -9007199254740991,
+                  "maximum": 9007199254740991
+                },
+                "VerticalUnit": {
+                  "title": "Measurement Unit",
+                  "description": "Controlled vocabulary (3 values at generation time); maintained in @datastreamapp/data-schema and changes with schema updates.",
+                  "type": "string",
+                  "maxLength": 4
+                },
+                "MonitoringLocationType": {
+                  "title": "Monitoring Location Type",
+                  "description": "Controlled vocabulary (24 values at generation time); maintained in @datastreamapp/data-schema and changes with schema updates.",
+                  "type": "string",
+                  "maxLength": 40
                 },
                 "LatitudeNormalized": {
-                  "type": "number"
+                  "type": "number",
+                  "minimum": -90,
+                  "maximum": 90
                 },
                 "LongitudeNormalized": {
-                  "type": "number"
+                  "type": "number",
+                  "minimum": -180,
+                  "maximum": 180
                 },
                 "HorizontalCoordinateReferenceSystemNormalized": {
-                  "type": "string"
+                  "type": "string",
+                  "enum": ["WGS84"]
                 }
               }
-            }
+            },
+            "maxItems": 10000,
+            "uniqueItems": true
           }
         }
       },
       "GetObservations": {
         "type": "object",
+        "additionalProperties": false,
         "properties": {
+          "odata.nextLink": {
+            "type": "string",
+            "pattern": "^https://api\\.datastream\\.org/v1/odata/v4/(Metadata|Locations|Observations|Records)\\??[a-zA-Z0-9\\._%&-]*$",
+            "maxLength": 256
+          },
+          "odata.count": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
           "value": {
             "type": "array",
             "items": {
               "type": "object",
+              "additionalProperties": false,
               "properties": {
                 "Id": {
-                  "type": "integer"
-                },
-                "DatasetId": {
-                  "type": "string"
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9007199254740991
                 },
                 "LocationId": {
-                  "type": "integer"
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9007199254740991
+                },
+                "DOI": {
+                  "title": "Digital Object Identifier (DOI)",
+                  "type": "string",
+                  "pattern": "^10\\.(25976|81029)/[a-z0-9]{4}-[a-z0-9]{2}[0-9]{2}$",
+                  "minLength": 18,
+                  "maxLength": 18
                 },
                 "ActivityType": {
-                  "type": "string"
+                  "title": "Activity Type",
+                  "description": "Controlled vocabulary (35 values at generation time); maintained in @datastreamapp/data-schema and changes with schema updates.",
+                  "type": "string",
+                  "maxLength": 70
                 },
                 "ActivityMediaName": {
-                  "type": "string"
+                  "title": "Activity Media Subdivision",
+                  "description": "Controlled vocabulary (8 values at generation time); maintained in @datastreamapp/data-schema and changes with schema updates.",
+                  "type": "string",
+                  "maxLength": 45
                 },
                 "ActivityStartDate": {
-                  "type": "string"
+                  "type": "string",
+                  "format": "date",
+                  "minLength": 10,
+                  "maxLength": 10
                 },
                 "ActivityStartTime": {
-                  "type": "string"
+                  "type": "string",
+                  "pattern": "^(2[0-3]|[01][0-9]):[0-5][0-9](:[0-5][0-9](\\.[0-9]{1,3})?)?$",
+                  "minLength": 5,
+                  "maxLength": 12
+                },
+                "ActivityStartTimeZone": {
+                  "type": "string",
+                  "pattern": "^(Z|[+-](0[0-9]|1[0-9]|2[0-4]):[0-5][0-9])$",
+                  "minLength": 1,
+                  "maxLength": 6
                 },
                 "ActivityEndDate": {
-                  "type": "string"
+                  "type": "string",
+                  "format": "date",
+                  "minLength": 10,
+                  "maxLength": 10
                 },
                 "ActivityEndTime": {
-                  "type": "string"
+                  "type": "string",
+                  "pattern": "^(2[0-3]|[01][0-9]):[0-5][0-9](:[0-5][0-9](\\.[0-9]{1,3})?)?$",
+                  "minLength": 5,
+                  "maxLength": 12
+                },
+                "ActivityEndTimeZone": {
+                  "type": "string",
+                  "pattern": "^(Z|[+-](0[0-9]|1[0-9]|2[0-4]):[0-5][0-9])$",
+                  "minLength": 1,
+                  "maxLength": 6
                 },
                 "ActivityDepthHeightMeasure": {
-                  "type": "number"
+                  "title": "Activity Depth/Height Measure",
+                  "description": "The distance from the surface to the point in the water column at which the activity is conducted (depth or height measured from a reference point)",
+                  "type": "number",
+                  "minimum": -9007199254740991,
+                  "maximum": 9007199254740991
                 },
                 "ActivityDepthHeightUnit": {
-                  "type": "string"
+                  "title": "Measurement Unit",
+                  "description": "Controlled vocabulary (3 values at generation time); maintained in @datastreamapp/data-schema and changes with schema updates.",
+                  "type": "string",
+                  "maxLength": 2
                 },
                 "SampleCollectionEquipmentName": {
-                  "type": "string"
+                  "title": "Sample Collection Equipment",
+                  "description": "Controlled vocabulary (49 values at generation time); maintained in @datastreamapp/data-schema and changes with schema updates.",
+                  "type": "string",
+                  "maxLength": 40
                 },
                 "CharacteristicName": {
-                  "type": "string"
+                  "title": "Characteristic",
+                  "description": "Controlled vocabulary (1661 values at generation time); maintained in @datastreamapp/data-schema and changes with schema updates.",
+                  "type": "string",
+                  "maxLength": 255
                 },
                 "MethodSpeciation": {
-                  "type": "string"
+                  "title": "Method Speciation",
+                  "description": "Controlled vocabulary (49 values at generation time); maintained in @datastreamapp/data-schema and changes with schema updates.",
+                  "type": "string",
+                  "maxLength": 20
                 },
                 "ResultSampleFraction": {
-                  "type": "string"
+                  "title": "Sample Fraction",
+                  "description": "Controlled vocabulary (32 values at generation time); maintained in @datastreamapp/data-schema and changes with schema updates.",
+                  "type": "string",
+                  "maxLength": 25
                 },
                 "ResultValue": {
-                  "type": "number"
+                  "title": "Result Value",
+                  "description": "Measured value of characteristic, required if Result Detection Condition Text is blank, No entry allowed if Result Detection Condition Text is populated.",
+                  "type": "number",
+                  "minimum": -9007199254740991,
+                  "maximum": 9007199254740991
                 },
                 "ResultUnit": {
-                  "type": "string"
+                  "title": "Measurement Unit",
+                  "description": "Controlled vocabulary (123 values at generation time); maintained in @datastreamapp/data-schema and changes with schema updates.",
+                  "type": "string",
+                  "maxLength": 21
                 },
                 "ResultValueType": {
-                  "type": "string"
+                  "title": "Result Value Type",
+                  "description": "Controlled vocabulary (5 values at generation time); maintained in @datastreamapp/data-schema and changes with schema updates.",
+                  "type": "string",
+                  "maxLength": 20
                 },
                 "ResultDetectionCondition": {
-                  "type": "string"
-                },
-                "ResultDetectionQuantitationLimitUnit": {
-                  "type": "string"
+                  "title": "Result Detection Condition",
+                  "description": "Controlled vocabulary (6 values at generation time); maintained in @datastreamapp/data-schema and changes with schema updates.",
+                  "type": "string",
+                  "maxLength": 36
                 },
                 "ResultDetectionQuantitationLimitMeasure": {
-                  "type": "number"
+                  "title": "Result Detection/Quantitation Limit Measure",
+                  "description": "The reportable measure of the result for the chemical, microbiological or other characteristic being analyzed.  Required if Result Detection Condition is `Not Detected`, `Present Above Quantification Limit`, or `Present Below Quantification Limit`.",
+                  "type": "number",
+                  "minimum": -9007199254740991,
+                  "maximum": 9007199254740991
+                },
+                "ResultDetectionQuantitationLimitUnit": {
+                  "title": "Measurement Unit",
+                  "description": "Controlled vocabulary (123 values at generation time); maintained in @datastreamapp/data-schema and changes with schema updates.",
+                  "type": "string",
+                  "maxLength": 21
                 },
                 "ResultDetectionQuantitationLimitType": {
-                  "type": "string"
+                  "title": "Detection Quantitation Limit Type",
+                  "description": "Controlled vocabulary (4 values at generation time); maintained in @datastreamapp/data-schema and changes with schema updates.",
+                  "type": "string",
+                  "maxLength": 34
                 },
-                "ResultStatusId": {
-                  "type": "string"
+                "ResultStatusID": {
+                  "title": "Result Status",
+                  "description": "Controlled vocabulary (6 values at generation time); maintained in @datastreamapp/data-schema and changes with schema updates.",
+                  "type": "string",
+                  "maxLength": 11
                 },
                 "ResultComment": {
-                  "type": "string"
+                  "title": "Result Comment",
+                  "description": "Provided to allow for the entry of comments about result",
+                  "type": "string",
+                  "minLength": 0,
+                  "maxLength": 4000,
+                  "pattern": "^[\\p{L}\\p{N}\\p{P}\\p{M}\\p{S} \\r\\n]+$"
                 },
-                "ResultAnalyticalMethodId": {
-                  "type": "string"
+                "ResultAnalyticalMethodID": {
+                  "title": "Result Analytical Method ID",
+                  "description": "",
+                  "maxLength": 50,
+                  "type": "string",
+                  "pattern": "^[\\p{L}\\p{N}\\p{P}\\p{M}\\p{S} ]+$"
                 },
                 "ResultAnalyticalMethodContext": {
-                  "type": "string"
+                  "title": "Analytical Method Context",
+                  "description": "Controlled vocabulary (42 values at generation time); maintained in @datastreamapp/data-schema and changes with schema updates.",
+                  "type": "string",
+                  "maxLength": 20
                 },
                 "ResultAnalyticalMethodName": {
-                  "type": "string"
+                  "title": "Result Analytical Method Name",
+                  "description": "Name of the analytical method",
+                  "maxLength": 300,
+                  "type": "string",
+                  "pattern": "^[\\p{L}\\p{N}\\p{P}\\p{M}\\p{S} ]+$"
                 },
                 "AnalysisStartDate": {
-                  "type": "string"
+                  "type": "string",
+                  "format": "date",
+                  "minLength": 10,
+                  "maxLength": 10
                 },
                 "AnalysisStartTime": {
-                  "type": "string"
+                  "type": "string",
+                  "pattern": "^(2[0-3]|[01][0-9]):[0-5][0-9](:[0-5][0-9](\\.[0-9]{1,3})?)?$",
+                  "minLength": 5,
+                  "maxLength": 12
                 },
                 "AnalysisStartTimeZone": {
-                  "type": "string"
+                  "type": "string",
+                  "pattern": "^(Z|[+-](0[0-9]|1[0-9]|2[0-4]):[0-5][0-9])$",
+                  "minLength": 1,
+                  "maxLength": 6
                 },
                 "LaboratoryName": {
-                  "type": "string"
+                  "maxLength": 100,
+                  "title": "Laboratory Name",
+                  "description": "Name of Laboratory performing the analysis",
+                  "type": "string",
+                  "minLength": 0,
+                  "pattern": "^[\\p{L}\\p{N}\\p{P}\\p{M}\\p{S} ]+$"
                 },
-                "LaboratorySampleId": {
-                  "type": "string"
-                },
-                "ActivityDepthHeightMeasureNormalized": {
-                  "type": "number"
-                },
-                "ActivityDepthHeightUnitNormalized": {
-                  "type": "string"
-                },
-                "ResultValueNormalized": {
-                  "type": "number"
-                },
-                "ResultUnitNormalized": {
-                  "type": "string"
-                },
-                "ResultDetectionQuantitationLimitMeasureNormalized": {
-                  "type": "string"
-                },
-                "ResultDetectionQuantitationLimitUnitNormalized": {
-                  "type": "string"
-                },
-                "CreateTimestamp": {
-                  "type": "string"
+                "LaboratorySampleID": {
+                  "title": "Laboratory Sample ID",
+                  "description": "Unique identifier for the lab sample",
+                  "maxLength": 60,
+                  "type": "string",
+                  "pattern": "^[\\p{L}\\p{N}\\p{P}\\p{M}\\p{S} ]+$"
                 }
               }
-            }
+            },
+            "maxItems": 10000,
+            "uniqueItems": true
           }
         }
       },
       "GetRecords": {
         "type": "object",
+        "additionalProperties": false,
         "properties": {
+          "odata.nextLink": {
+            "type": "string",
+            "pattern": "^https://api\\.datastream\\.org/v1/odata/v4/(Metadata|Locations|Observations|Records)\\??[a-zA-Z0-9\\._%&-]*$",
+            "maxLength": 256
+          },
+          "odata.count": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
           "value": {
             "type": "array",
             "items": {
               "type": "object",
+              "additionalProperties": false,
               "properties": {
                 "Id": {
-                  "type": "integer"
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9007199254740991
+                },
+                "DOI": {
+                  "title": "Digital Object Identifier (DOI)",
+                  "type": "string",
+                  "pattern": "^10\\.(25976|81029)/[a-z0-9]{4}-[a-z0-9]{2}[0-9]{2}$",
+                  "minLength": 18,
+                  "maxLength": 18
                 },
                 "DatasetName": {
-                  "type": "string"
+                  "minLength": 1,
+                  "maxLength": 512,
+                  "type": "string",
+                  "pattern": "^[\\p{L}\\p{N}\\p{P}\\p{M}\\p{S} ]+$"
                 },
                 "MonitoringLocationID": {
-                  "type": "string"
+                  "minLength": 1,
+                  "title": "Monitoring Location ID",
+                  "description": "Valid Monitoring ID; required for most Activity Type Codes; Must correspond to Monitoring Locations already in WQX/STORET or entered in Monitoring Locations tab",
+                  "type": "string",
+                  "maxLength": 55,
+                  "pattern": "^[\\p{L}\\p{N}\\p{P}\\p{M}\\p{S} ]+$"
                 },
                 "MonitoringLocationName": {
-                  "type": "string"
+                  "minLength": 1,
+                  "title": "Monitoring Location Name",
+                  "description": "A geographically descriptive name",
+                  "type": "string",
+                  "maxLength": 255,
+                  "pattern": "^[\\p{L}\\p{N}\\p{P}\\p{M}\\p{S} ]+$"
                 },
                 "MonitoringLocationLatitude": {
-                  "type": "number"
+                  "title": "Monitoring Location Latitude",
+                  "description": "Latitude. Decimal 6-8 digits (i.e., 37)",
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 90
                 },
                 "MonitoringLocationLongitude": {
-                  "type": "number"
+                  "title": "Monitoring Location Longitude",
+                  "description": "Longitude. Decimal 6-9 digits (i.e., -74.75)",
+                  "type": "number",
+                  "minimum": -180,
+                  "maximum": 180
                 },
                 "MonitoringLocationHorizontalCoordinateReferenceSystem": {
-                  "type": "string"
+                  "title": "Horizontal Reference Datum",
+                  "description": "Controlled vocabulary (6 values at generation time); maintained in @datastreamapp/data-schema and changes with schema updates.",
+                  "type": "string",
+                  "maxLength": 5
+                },
+                "MonitoringLocationHorizontalAccuracyMeasure": {
+                  "title": "Activity Horizontal Accuracy Measure",
+                  "description": "The horizontal measure indicating the relative accuracy of the latitude and longitude coordinates",
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 9007199254740991
+                },
+                "MonitoringLocationHorizontalAccuracyUnit": {
+                  "title": "Measurement Unit",
+                  "description": "Controlled vocabulary (2 values at generation time); maintained in @datastreamapp/data-schema and changes with schema updates.",
+                  "type": "string",
+                  "maxLength": 2
+                },
+                "MonitoringLocationVerticalMeasure": {
+                  "title": "Vertical Measure",
+                  "description": "The measure of elevation (i.e., the altitude), above or below a reference datum.",
+                  "type": "number",
+                  "minimum": -9007199254740991,
+                  "maximum": 9007199254740991
+                },
+                "MonitoringLocationVerticalUnit": {
+                  "title": "Measurement Unit",
+                  "description": "Controlled vocabulary (3 values at generation time); maintained in @datastreamapp/data-schema and changes with schema updates.",
+                  "type": "string",
+                  "maxLength": 4
                 },
                 "MonitoringLocationType": {
-                  "type": "string"
+                  "title": "Monitoring Location Type",
+                  "description": "Controlled vocabulary (24 values at generation time); maintained in @datastreamapp/data-schema and changes with schema updates.",
+                  "type": "string",
+                  "maxLength": 40
                 },
                 "ActivityType": {
-                  "type": "string"
+                  "title": "Activity Type",
+                  "description": "Controlled vocabulary (35 values at generation time); maintained in @datastreamapp/data-schema and changes with schema updates.",
+                  "type": "string",
+                  "maxLength": 70
                 },
                 "ActivityMediaName": {
-                  "type": "string"
+                  "title": "Activity Media Subdivision",
+                  "description": "Controlled vocabulary (8 values at generation time); maintained in @datastreamapp/data-schema and changes with schema updates.",
+                  "type": "string",
+                  "maxLength": 45
                 },
                 "ActivityStartDate": {
-                  "type": "string"
+                  "type": "string",
+                  "format": "date",
+                  "minLength": 10,
+                  "maxLength": 10
                 },
                 "ActivityStartTime": {
-                  "type": "string"
+                  "type": "string",
+                  "pattern": "^(2[0-3]|[01][0-9]):[0-5][0-9](:[0-5][0-9](\\.[0-9]{1,3})?)?$",
+                  "minLength": 5,
+                  "maxLength": 12
+                },
+                "ActivityStartTimeZone": {
+                  "type": "string",
+                  "pattern": "^(Z|[+-](0[0-9]|1[0-9]|2[0-4]):[0-5][0-9])$",
+                  "minLength": 1,
+                  "maxLength": 6
                 },
                 "ActivityEndDate": {
-                  "type": "string"
+                  "type": "string",
+                  "format": "date",
+                  "minLength": 10,
+                  "maxLength": 10
                 },
                 "ActivityEndTime": {
-                  "type": "string"
+                  "type": "string",
+                  "pattern": "^(2[0-3]|[01][0-9]):[0-5][0-9](:[0-5][0-9](\\.[0-9]{1,3})?)?$",
+                  "minLength": 5,
+                  "maxLength": 12
+                },
+                "ActivityEndTimeZone": {
+                  "type": "string",
+                  "pattern": "^(Z|[+-](0[0-9]|1[0-9]|2[0-4]):[0-5][0-9])$",
+                  "minLength": 1,
+                  "maxLength": 6
                 },
                 "ActivityDepthHeightMeasure": {
-                  "type": "number"
+                  "title": "Activity Depth/Height Measure",
+                  "description": "The distance from the surface to the point in the water column at which the activity is conducted (depth or height measured from a reference point)",
+                  "type": "number",
+                  "minimum": -9007199254740991,
+                  "maximum": 9007199254740991
                 },
                 "ActivityDepthHeightUnit": {
-                  "type": "string"
+                  "title": "Measurement Unit",
+                  "description": "Controlled vocabulary (3 values at generation time); maintained in @datastreamapp/data-schema and changes with schema updates.",
+                  "type": "string",
+                  "maxLength": 2
                 },
                 "SampleCollectionEquipmentName": {
-                  "type": "string"
+                  "title": "Sample Collection Equipment",
+                  "description": "Controlled vocabulary (49 values at generation time); maintained in @datastreamapp/data-schema and changes with schema updates.",
+                  "type": "string",
+                  "maxLength": 40
                 },
                 "CharacteristicName": {
-                  "type": "string"
+                  "title": "Characteristic",
+                  "description": "Controlled vocabulary (1661 values at generation time); maintained in @datastreamapp/data-schema and changes with schema updates.",
+                  "type": "string",
+                  "maxLength": 255
                 },
                 "MethodSpeciation": {
-                  "type": "string"
+                  "title": "Method Speciation",
+                  "description": "Controlled vocabulary (49 values at generation time); maintained in @datastreamapp/data-schema and changes with schema updates.",
+                  "type": "string",
+                  "maxLength": 20
                 },
                 "ResultSampleFraction": {
-                  "type": "string"
+                  "title": "Sample Fraction",
+                  "description": "Controlled vocabulary (32 values at generation time); maintained in @datastreamapp/data-schema and changes with schema updates.",
+                  "type": "string",
+                  "maxLength": 25
                 },
                 "ResultValue": {
-                  "type": "number"
+                  "title": "Result Value",
+                  "description": "Measured value of characteristic, required if Result Detection Condition Text is blank, No entry allowed if Result Detection Condition Text is populated.",
+                  "type": "number",
+                  "minimum": -9007199254740991,
+                  "maximum": 9007199254740991
                 },
                 "ResultUnit": {
-                  "type": "string"
+                  "title": "Measurement Unit",
+                  "description": "Controlled vocabulary (123 values at generation time); maintained in @datastreamapp/data-schema and changes with schema updates.",
+                  "type": "string",
+                  "maxLength": 21
                 },
                 "ResultValueType": {
-                  "type": "string"
+                  "title": "Result Value Type",
+                  "description": "Controlled vocabulary (5 values at generation time); maintained in @datastreamapp/data-schema and changes with schema updates.",
+                  "type": "string",
+                  "maxLength": 20
                 },
                 "ResultDetectionCondition": {
-                  "type": "string"
+                  "title": "Result Detection Condition",
+                  "description": "Controlled vocabulary (6 values at generation time); maintained in @datastreamapp/data-schema and changes with schema updates.",
+                  "type": "string",
+                  "maxLength": 36
                 },
                 "ResultDetectionQuantitationLimitMeasure": {
-                  "type": "number"
+                  "title": "Result Detection/Quantitation Limit Measure",
+                  "description": "The reportable measure of the result for the chemical, microbiological or other characteristic being analyzed.  Required if Result Detection Condition is `Not Detected`, `Present Above Quantification Limit`, or `Present Below Quantification Limit`.",
+                  "type": "number",
+                  "minimum": -9007199254740991,
+                  "maximum": 9007199254740991
                 },
                 "ResultDetectionQuantitationLimitUnit": {
-                  "type": "string"
+                  "title": "Measurement Unit",
+                  "description": "Controlled vocabulary (123 values at generation time); maintained in @datastreamapp/data-schema and changes with schema updates.",
+                  "type": "string",
+                  "maxLength": 21
                 },
                 "ResultDetectionQuantitationLimitType": {
-                  "type": "string"
+                  "title": "Detection Quantitation Limit Type",
+                  "description": "Controlled vocabulary (4 values at generation time); maintained in @datastreamapp/data-schema and changes with schema updates.",
+                  "type": "string",
+                  "maxLength": 34
                 },
                 "ResultStatusID": {
-                  "type": "string"
+                  "title": "Result Status",
+                  "description": "Controlled vocabulary (6 values at generation time); maintained in @datastreamapp/data-schema and changes with schema updates.",
+                  "type": "string",
+                  "maxLength": 11
                 },
                 "ResultComment": {
-                  "type": "string"
+                  "title": "Result Comment",
+                  "description": "Provided to allow for the entry of comments about result",
+                  "type": "string",
+                  "minLength": 0,
+                  "maxLength": 4000,
+                  "pattern": "^[\\p{L}\\p{N}\\p{P}\\p{M}\\p{S} \\r\\n]+$"
                 },
                 "ResultAnalyticalMethodID": {
-                  "type": "string"
+                  "title": "Result Analytical Method ID",
+                  "description": "",
+                  "maxLength": 50,
+                  "type": "string",
+                  "pattern": "^[\\p{L}\\p{N}\\p{P}\\p{M}\\p{S} ]+$"
                 },
                 "ResultAnalyticalMethodContext": {
-                  "type": "string"
+                  "title": "Analytical Method Context",
+                  "description": "Controlled vocabulary (42 values at generation time); maintained in @datastreamapp/data-schema and changes with schema updates.",
+                  "type": "string",
+                  "maxLength": 20
                 },
                 "ResultAnalyticalMethodName": {
-                  "type": "string"
+                  "title": "Result Analytical Method Name",
+                  "description": "Name of the analytical method",
+                  "maxLength": 300,
+                  "type": "string",
+                  "pattern": "^[\\p{L}\\p{N}\\p{P}\\p{M}\\p{S} ]+$"
                 },
                 "AnalysisStartDate": {
-                  "type": "string"
+                  "type": "string",
+                  "format": "date",
+                  "minLength": 10,
+                  "maxLength": 10
                 },
                 "AnalysisStartTime": {
-                  "type": "string"
+                  "type": "string",
+                  "pattern": "^(2[0-3]|[01][0-9]):[0-5][0-9](:[0-5][0-9](\\.[0-9]{1,3})?)?$",
+                  "minLength": 5,
+                  "maxLength": 12
                 },
                 "AnalysisStartTimeZone": {
-                  "type": "string"
+                  "type": "string",
+                  "pattern": "^(Z|[+-](0[0-9]|1[0-9]|2[0-4]):[0-5][0-9])$",
+                  "minLength": 1,
+                  "maxLength": 6
                 },
                 "LaboratoryName": {
-                  "type": "string"
+                  "maxLength": 100,
+                  "title": "Laboratory Name",
+                  "description": "Name of Laboratory performing the analysis",
+                  "type": "string",
+                  "minLength": 0,
+                  "pattern": "^[\\p{L}\\p{N}\\p{P}\\p{M}\\p{S} ]+$"
                 },
                 "LaboratorySampleID": {
-                  "type": "string"
+                  "title": "Laboratory Sample ID",
+                  "description": "Unique identifier for the lab sample",
+                  "maxLength": 60,
+                  "type": "string",
+                  "pattern": "^[\\p{L}\\p{N}\\p{P}\\p{M}\\p{S} ]+$"
                 }
               }
-            }
-          }
-        }
-      },
-      "DeleteRecords": {
-        "type": "object",
-        "properties": {
-          "value": {
-            "type": "object"
-          }
-        }
-      },
-      "PostRecords": {
-        "type": "object",
-        "properties": {
-          "value": {
-            "type": "object",
-            "properties": {
-              "Location": {
-                "type": "string"
-              }
-            }
+            },
+            "maxItems": 10000,
+            "uniqueItems": true
           }
         }
       }
