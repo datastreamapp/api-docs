@@ -34,7 +34,7 @@
             "name": "$filter",
             "in": "query",
             "required": false,
-            "description": "OData filter expression. Filterable properties: DOI, LocationId, ActivityMediaName, ActivityGroupType, CharacteristicName, MonitoringLocationType, ActivityStartDateYear, ActivityStartYear, RegionId, Latitude, Longitude, LatitudeNormalized, LongitudeNormalized, DatasetName, CreateTimestamp. Operators: in, eq, lt, gt, lte, gte, ne, and.",
+            "description": "OData filter expression. Filterable properties: DOI, LocationId, ActivityMediaName, ActivityGroupType, CharacteristicName, MonitoringLocationType, ActivityStartDateYear, ActivityStartYear, RegionId, Latitude, Longitude, DatasetName, CreateTimestamp. Operators: in, eq, lt, gt, lte, gte, ne, and.",
             "schema": { "type": "string" }
           },
           {
@@ -102,14 +102,14 @@
             "name": "$select",
             "in": "query",
             "required": false,
-            "description": "Comma-delimited list of fields. Allowed: Id, DOI, ID, Name, Latitude, Longitude, HorizontalCoordinateReferenceSystem, HorizontalAccuracyMeasure, HorizontalAccuracyUnit, VerticalMeasure, VerticalUnit, MonitoringLocationType, LatitudeNormalized, LongitudeNormalized, HorizontalCoordinateReferenceSystemNormalized. Default: Id, DOI, ID, Name, Latitude, Longitude, HorizontalCoordinateReferenceSystem, HorizontalAccuracyMeasure, HorizontalAccuracyUnit, VerticalMeasure, VerticalUnit, MonitoringLocationType.",
+            "description": "Comma-delimited list of fields. Allowed: Id, DOI, ID, Name, Latitude, Longitude, HorizontalCoordinateReferenceSystem, HorizontalAccuracyMeasure, HorizontalAccuracyUnit, VerticalMeasure, VerticalUnit, MonitoringLocationType. Default: all allowed fields.",
             "schema": { "type": "string" }
           },
           {
             "name": "$filter",
             "in": "query",
             "required": false,
-            "description": "OData filter expression. Filterable properties: DOI, LocationId, ActivityMediaName, ActivityGroupType, CharacteristicName, MonitoringLocationType, ActivityStartDateYear, ActivityStartYear, RegionId, Latitude, Longitude, LatitudeNormalized, LongitudeNormalized, Name. Operators: in, eq, lt, gt, lte, gte, ne, and.",
+            "description": "OData filter expression. Filterable properties: DOI, LocationId, ActivityMediaName, ActivityGroupType, CharacteristicName, MonitoringLocationType, ActivityStartDateYear, ActivityStartYear, RegionId, Latitude, Longitude, Name. Operators: in, eq, lt, gt, lte, gte, ne, and.",
             "schema": { "type": "string" }
           },
           {
@@ -488,20 +488,6 @@
                   "description": "Controlled vocabulary (24 values at generation time); maintained in @datastreamapp/data-schema and changes with schema updates.",
                   "type": "string",
                   "maxLength": 40
-                },
-                "LatitudeNormalized": {
-                  "type": "number",
-                  "minimum": -90,
-                  "maximum": 90
-                },
-                "LongitudeNormalized": {
-                  "type": "number",
-                  "minimum": -180,
-                  "maximum": 180
-                },
-                "HorizontalCoordinateReferenceSystemNormalized": {
-                  "type": "string",
-                  "enum": ["WGS84"]
                 }
               }
             },
