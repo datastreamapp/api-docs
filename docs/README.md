@@ -352,6 +352,17 @@ curl -G -H 'x-api-key: PRIVATE-API-KEY' \
 ### 400 Bad Request: `{"message":null}`
 This means your request was denied before reaching our service. This happens when the query string is not encoded properly. ie `$` -> `%24`.
 
+### 401 Unauthorized
+This means no API key was found on your request. Send your key in the `x-api-key` header. If you are sending a key and are still rejected, see `403 Forbidden` below.
+
+### 403 Forbidden
+This means either your API key was not recognized, or your request was denied before reaching our service. A non-JSON response body indicates the latter, which has a few common causes:
+
+- **The query string is too long.** Keep the whole request URL under roughly 2KB. Long `in (...)` filter lists are the usual cause — split them across multiple requests. How many values fit depends on their length, so measure the URL rather than counting values.
+- **No `User-Agent` header was sent.** Some HTTP clients omit it by default; set one.
+
+Requests to paths outside the documented endpoints may also be denied.
+
 ### 408 or 504 Timeout
 This means your request was too complicated and was unable to complete within 30sec. To resolve this issue, retry once. If the issue persists, try lowering the `$top` and/or adding in narrower filters. 
 
