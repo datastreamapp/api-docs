@@ -10,10 +10,6 @@
     {
       "url": "https://api.datastream.org/v1/odata/v4",
       "description": "production"
-    },
-    {
-      "url": "https://api.qa.datastream.org/v1/odata/v4",
-      "description": "testing"
     }
   ],
   "paths": {

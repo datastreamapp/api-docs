@@ -31,8 +31,7 @@ For those building their own implementation, here are some key things to keep in
 - Only `GET` requests are supported.
 
 ## Endpoints
-You can test out your script by prefixing `https://api.qa.datastream.org/v1/odata/v4` to the endpoints.
-When you're ready to pull data from the production system you can use: `https://api.datastream.org/v1/odata/v4`.
+Prefix `https://api.datastream.org/v1/odata/v4` to the endpoints below.
 
 > [!IMPORTANT]
 > Your API key is a bearer credential — anyone who has it can use it from anywhere,
