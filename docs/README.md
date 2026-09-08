@@ -27,15 +27,19 @@ For those building their own implementation, here are some key things to keep in
 - Each request partition should be paginated over using the `Link` header or `@odata.nextLink` within the body of the response.
 - Rate limit yourself (2 reqs/sec) and don't make requests in parallel. This will ensure you don't get `429 Too Many Requests` error response.
 - Use HTTP/3
+- Requests from browser front-ends aren't supported. Call the API from your backend and serve the results to your page from there.
+- Only `GET` requests are supported.
 
 ## Endpoints
 You can test out your script by prefixing `https://api.qa.datastream.org/v1/odata/v4` to the endpoints.
 When you're ready to pull data from the production system you can use: `https://api.datastream.org/v1/odata/v4`.
-For browser requests all you need to do is let us know your domain name and we can add it to the CORS whitelist, only GET requests are supported. All other application should store the API Key in the header `x-api-key`.
 
-> [!Note]
-> Remember that your API key is for your use only. Please do not share your API key.
-> If it does become public, please let us know, we can give you a new one.
+> [!IMPORTANT]
+> Your API key is a bearer credential — anyone who has it can use it from anywhere,
+> so it's for your use only and shouldn't be shared. Send it in the `x-api-key`
+> header from a server, script, or notebook you control: a key shipped in front-end
+> code is public. If your key does become public, let us know and we'll issue you a
+> new one.
 
 A machine-readable [OpenAPI specification](openapi/openapischema.json) of these endpoints is also available.
 
