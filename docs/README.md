@@ -14,7 +14,7 @@ It's a REST API built on [OData v4](https://odata.org/) (standardized as ISO/IEC
 - **Read-only** — only `GET` requests are supported
 - **Server-side** — requests from browser front-ends aren't supported
 - **Rate limited** — 2 requests/sec, no parallel requests
-- **Requires an API key** — [free, on request](#1-request-an-api-key)
+- **Requires an API key** — free, on request
 
 ## Getting Started
 
@@ -72,6 +72,7 @@ We have built modules to wrap around our API to make it easier to use.
 - [`JavaScript`](https://github.com/datastreamapp/datastreamjs)
 - [`Shell`](https://github.com/datastreamapp/datastreamsh)
 
+## Building your own implementation
 For those building their own implementation, here are some key things to keep in mind:
 - Querystring parameters must be URL encoded. All languages should have a function to do this.
 - Requests to Observations/Records that you expect a large amount (>1M rows) of data from should be partitioned. We recommend by Monitoring locations and/or activity start year. There is a technical database reason for this that you're welcome to ask us about.
@@ -83,8 +84,6 @@ For those building their own implementation, here are some key things to keep in
 
 ## Endpoints
 Prefix `https://api.datastream.org/v1/odata/v4` to the endpoints below.
-
-
 
 A machine-readable [OpenAPI specification](openapi/openapischema.json) of these endpoints is also available.
 
