@@ -1,15 +1,66 @@
-<h1 align="center">
-  <img src="https://raw.githubusercontent.com/gordonfn/api/main/docs/images/datastream.svg?sanitize=true" alt="DataStream Logo" width="400">
-  <br/>
-  DataStream Public API
-  <br/>
-  <br/>
-</h1>
-<p align="center">
-  <a href="https://docs.google.com/forms/d/1SjPVeblz2QFaghpiBZPZKOVNKXgw5UMnAtJLJS1tQYI">Request an API Key</a>
-</p>
 
-Our public API uses the ISO/IEC 20802-2 Standard known as [OData JSON Format v4](https://odata.org).
+
+<div align="center">
+  <img src="https://raw.githubusercontent.com/gordonfn/api/main/docs/images/datastream.svg?sanitize=true" alt="DataStream Logo" width="400">
+  <h3>DataStream Public API</h3>
+</div>
+
+## About
+
+The DataStream Public API provides read-only, programmatic access to all publicly available water quality data hosted on DataStream — dataset metadata, monitoring locations, and observations.
+
+It's a REST API built on [OData v4](https://odata.org/) (standardized as ISO/IEC 20802-2), so responses are predictable JSON and filtering uses a common, documented query syntax.
+
+- **Read-only** — only `GET` requests are supported
+- **Server-side** — requests from browser front-ends aren't supported
+- **Rate limited** — 2 requests/sec, no parallel requests
+- **Requires an API key** — [free, on request](#1-request-an-api-key)
+
+## Getting Started
+
+### 1. Get an API key
+
+An API key gives you direct, programmatic access to all publicly available data hosted on DataStream. Tell us about your project and how you plan to use it — **we'll typically respond within 24 hours on business days.**
+
+**[Request an API key ↗︎](https://docs.google.com/forms/d/1SjPVeblz2QFaghpiBZPZKOVNKXgw5UMnAtJLJS1tQYI)**
+
+### 2. Make your first request
+
+Send your key in the `x-api-key` header on every request. This one returns a single dataset's metadata:
+
+```bash
+curl -G -H 'x-api-key: PRIVATE-API-KEY' \
+     https://api.datastream.org/v1/odata/v4/Metadata \
+     --data-urlencode "\$select=DOI,DatasetName,Citation,Licence" \
+     --data-urlencode "\$top=1"
+```
+
+```json
+{
+  "value": [
+    {
+      "DOI": "10.25976/xxxx-xx00",
+      "DatasetName": "Sample Dataset A",
+      "Citation": "Sample Organization A. 2024. \"Sample Dataset A\" (dataset). 1.0.0. DataStream. https://doi.org/10.25976/xxxx-xx00.",
+      "Licence": "https://opendatacommons.org/licenses/by/1-0/"
+    }
+  ]
+}
+```
+
+Results include `Citation` and `Licence` — see [Attribution/Citation](#attributioncitation) before publishing or redistributing. See [Endpoints](#endpoints) for the full set of fields and filters.
+
+> [!IMPORTANT]
+> Your API key is a bearer credential — anyone who has it can use it from anywhere,
+> so it's for your use only and shouldn't be shared. Call the API from a server,
+> script, or notebook you control: a key shipped in front-end code is public. If
+> your key does become public, email [team@datastream.org](mailto:team@datastream.org)
+> and we'll issue you a new one.
+
+### 3. Pick your approach
+
+- Working in R, Python, JavaScript, or the shell? Use one of our [modules](#modules) — they handle pagination and encoding for you.
+- Building your own client? Read the [implementation notes](#building-your-own-implementation) before you start, then see [Endpoints](#endpoints) and [URL Parameters](#url-parameters).
 
 ## Attribution/Citation
 Thank you ahead of time for using this data responsibly and providing the appropriate citations when necessary when being presented to external parties. These citations must be accompanied by a link to the DOI (https://doi.org/{value}). The licence, citation, and DOI can be retrieved from the `/Metadata` endpoint.
@@ -33,12 +84,7 @@ For those building their own implementation, here are some key things to keep in
 ## Endpoints
 Prefix `https://api.datastream.org/v1/odata/v4` to the endpoints below.
 
-> [!IMPORTANT]
-> Your API key is a bearer credential — anyone who has it can use it from anywhere,
-> so it's for your use only and shouldn't be shared. Send it in the `x-api-key`
-> header from a server, script, or notebook you control: a key shipped in front-end
-> code is public. If your key does become public, let us know and we'll issue you a
-> new one.
+
 
 A machine-readable [OpenAPI specification](openapi/openapischema.json) of these endpoints is also available.
 
