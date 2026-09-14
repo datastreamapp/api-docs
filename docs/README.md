@@ -75,7 +75,7 @@ We have built modules to wrap around our API to make it easier to use.
 ## Building your own implementation
 For those building their own implementation, here are some key things to keep in mind:
 - Querystring parameters must be URL encoded. All languages should have a function to do this.
-- Requests to Observations/Records that you expect a large amount (>1M rows) of data from should be partitioned. We recommend by Monitoring locations and/or activity start year. There is a technical database reason for this that you're welcome to ask us about.
+- Requests to Observations/Records that you expect a large amount (>1M rows) of data from should be partitioned. We recommend by Monitoring locations and/or activity start year.
 - Each request partition should be paginated over using the `Link` header or `@odata.nextLink` within the body of the response.
 - Rate limit yourself (2 reqs/sec) and don't make requests in parallel. This will ensure you don't get `429 Too Many Requests` error response.
 - Use HTTP/3
@@ -136,7 +136,7 @@ OData accepts certain query parameters. The ones supported by this API are:
     - RegionId Values (these values are subject to change):
       - Partner Hubs: `hub.{atlantic,greatlakes,lakewinnipeg,mackenzie,pacific}`
       - Countries: `admin.2.{ca}`
-      - Provinces/Territories/States: `admin.4.ca.{ab,bc,mb,nb,nl,ns,nt,nu.on,pe,,qc,sk,yt}`
+      - Provinces/Territories/States: `admin.4.ca.{ab,bc,mb,nb,nl,ns,nt,nu,on,pe,qc,sk,yt}`
     - Bounding box `$filter=Longitude gt '-102.01' and Longitude lt '-88.99' and Latitude gt '49' and Latitude lt '60'`
   <!-- - Functions: `$filter=contains(DOI, 'xxxx')`, `$filter=startwith(DOI, 'xxxx')`, `$filter=endswith(DOI, 'xxxx-xxxx')` -->
 - **$top**
