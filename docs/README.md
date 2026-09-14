@@ -9,7 +9,7 @@
 
 The DataStream Public API provides read-only, programmatic access to all publicly available water quality data hosted on DataStream — dataset metadata, monitoring locations, and observations.
 
-It's a REST API built on [OData v4](https://odata.org/) (standardized as ISO/IEC 20802-2), so responses are predictable JSON and filtering uses a common, documented query syntax.
+It's a REST API built on [OData v4](https://odata.org/) (standardized as ISO/IEC 20802-2). Every endpoint returns JSON in the same shape, and filtering works the same way across all of them.
 
 - **Read-only** — only `GET` requests are supported
 - **Server-side** — requests from browser front-ends aren't supported
