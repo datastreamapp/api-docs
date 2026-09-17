@@ -62,8 +62,8 @@ Results include `Citation` and `Licence` — see [Attribution/Citation](#attribu
 - Working in R, Python, JavaScript, or the shell? Use one of our [modules](#modules) — they handle pagination and encoding for you.
 - Building your own client? Read the [implementation notes](#building-your-own-implementation) before you start, then see [Endpoints](#endpoints) and [URL Parameters](#url-parameters).
 
-## Attribution/Citation
-Thank you ahead of time for using this data responsibly and providing the appropriate citations when necessary when being presented to external parties. These citations must be accompanied by a link to the DOI (https://doi.org/{value}). The licence, citation, and DOI can be retrieved from the `/Metadata` endpoint.
+## Attribution and citation
+Many datasets available through this API are published under licences that require attribution. Where attribution applies, the data provider must be credited in any analysis, report, publication, or derived data product shared with external parties. Each citation must include a link to the dataset's DOI in the form https://doi.org/{value}. The licence, recommended citation, and DOI for a given dataset can be retrieved from the /Metadata endpoint.
 
 ## Modules
 We have built modules to wrap around our API to make it easier to use.
