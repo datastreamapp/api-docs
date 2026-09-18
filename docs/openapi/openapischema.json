@@ -30,7 +30,7 @@
             "name": "$filter",
             "in": "query",
             "required": false,
-            "description": "OData filter expression. Filterable properties: DOI, LocationId, ActivityMediaName, ActivityGroupType, CharacteristicName, MonitoringLocationType, ActivityStartDateYear, ActivityStartYear, RegionId, Latitude, Longitude, DatasetName, CreateTimestamp. Operators: in, eq, lt, gt, lte, gte, ne, and.",
+            "description": "OData filter expression. Filterable properties: DOI, LocationId, ActivityMediaName, ActivityGroupType, CharacteristicName, MonitoringLocationType, ActivityStartDateYear, ActivityStartYear, RegionId, Latitude, Longitude, DatasetName, CreateTimestamp. Operators: in, eq, ne, lt, le, gt, ge, and. `lte` and `gte` are accepted as deprecated aliases of `le` and `ge`.",
             "schema": { "type": "string" }
           },
           {
@@ -105,7 +105,7 @@
             "name": "$filter",
             "in": "query",
             "required": false,
-            "description": "OData filter expression. Filterable properties: DOI, LocationId, ActivityMediaName, ActivityGroupType, CharacteristicName, MonitoringLocationType, ActivityStartDateYear, ActivityStartYear, RegionId, Latitude, Longitude, Name. Operators: in, eq, lt, gt, lte, gte, ne, and.",
+            "description": "OData filter expression. Filterable properties: DOI, LocationId, ActivityMediaName, ActivityGroupType, CharacteristicName, MonitoringLocationType, ActivityStartDateYear, ActivityStartYear, RegionId, Latitude, Longitude, Name. Operators: in, eq, ne, lt, le, gt, ge, and. `lte` and `gte` are accepted as deprecated aliases of `le` and `ge`.",
             "schema": { "type": "string" }
           },
           {
@@ -180,7 +180,7 @@
             "name": "$filter",
             "in": "query",
             "required": false,
-            "description": "OData filter expression. Filterable properties: DOI, LocationId, ActivityMediaName, ActivityGroupType, CharacteristicName, MonitoringLocationType, ActivityStartDateYear, ActivityStartYear, RegionId. Operators: in, eq, lt, gt, lte, gte, ne, and.",
+            "description": "OData filter expression. Filterable properties: DOI, LocationId, ActivityMediaName, ActivityGroupType, CharacteristicName, MonitoringLocationType, ActivityStartDateYear, ActivityStartYear, RegionId. Operators: in, eq, ne, lt, le, gt, ge, and. `lte` and `gte` are accepted as deprecated aliases of `le` and `ge`.",
             "schema": { "type": "string" }
           },
           {
@@ -255,7 +255,7 @@
             "name": "$filter",
             "in": "query",
             "required": false,
-            "description": "OData filter expression. Filterable properties: DOI, LocationId, ActivityMediaName, ActivityGroupType, CharacteristicName, MonitoringLocationType, ActivityStartDateYear, ActivityStartYear, RegionId. Operators: in, eq, lt, gt, lte, gte, ne, and.",
+            "description": "OData filter expression. Filterable properties: DOI, LocationId, ActivityMediaName, ActivityGroupType, CharacteristicName, MonitoringLocationType, ActivityStartDateYear, ActivityStartYear, RegionId. Operators: in, eq, ne, lt, le, gt, ge, and. `lte` and `gte` are accepted as deprecated aliases of `le` and `ge`.",
             "schema": { "type": "string" }
           },
           {
