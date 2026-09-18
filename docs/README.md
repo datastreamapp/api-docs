@@ -193,7 +193,7 @@ curl -G -H 'x-api-key: PRIVATE-API-KEY' \
 curl -G -H 'x-api-key: PRIVATE-API-KEY' \
      https://api.datastream.org/v1/odata/v4/Metadata \
      --data-urlencode "\$select=DOI,DatasetName,Licence,Citation,Version" \
-     --data-urlencode "\$filter=endswith(DOI, 'xxxx-xxxx')" \
+     --data-urlencode "\$filter=DOI eq '10.25976/xxxx-xx00'"
 ```
 
 **Sample Response**
