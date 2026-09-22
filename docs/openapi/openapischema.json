@@ -2,7 +2,7 @@
   "openapi": "3.0.3",
   "info": {
     "title": "DataStream Public API",
-    "description": "OData v4 API for querying environmental water quality data.",
+    "description": "OData v4 API for querying environmental water quality data. This API is in Beta - changes will happen.",
     "version": "1.0.0",
     "license": { "name": "MIT", "url": "https://opensource.org/license/mit/" }
   },
