@@ -61,6 +61,7 @@ Results include `Citation` and `Licence` — see [Attribution/Citation](#attribu
 
 - Working in R, Python, JavaScript, or the shell? Use one of our [modules](#modules) — they handle pagination and encoding for you.
 - Building your own client? Read the [implementation notes](#building-your-own-implementation) before you start, then see [Endpoints](#endpoints) and [URL Parameters](#url-parameters).
+- Looking for a specific field or filter? The [API reference](https://datastreamapp.github.io/api-docs/) is generated from the specification and is always current.
 
 ## Attribution and citation
 Many datasets available through this API are published under licences that require attribution. Where attribution applies, the data provider must be credited in any analysis, report, publication, or derived data product shared with external parties. Each citation must include a link to the dataset's DOI in the form https://doi.org/{value}. The licence, recommended citation, and DOI for a given dataset can be retrieved from the /Metadata endpoint.
@@ -85,18 +86,20 @@ For those building their own implementation, here are some key things to keep in
 ## Endpoints
 Prefix `https://api.datastream.org/v1/odata/v4` to the endpoints below.
 
-A machine-readable [OpenAPI specification](openapi/openapischema.json) of these endpoints is also available.
+**[Browse the full API reference](https://datastreamapp.github.io/api-docs/)** — every endpoint, field, filter and response,
+generated from the OpenAPI specification, with request samples in curl, Python and R.
+The [specification itself](openapi/openapischema.json) is machine-readable.
 
 - **GET /Metadata**
   - Retrieves the dataset-level metadata for the datasets that meet your query criteria.   
   - Select By: `DOI`, `Version`, `DatasetName`, `DataStewardEmail`, `DataCollectionOrganization`, `DataUploadOrganization`, `ProgressCode`, `MaintenanceFrequencyCode`, `Abstract`, `DataCollectionInformation`, `DataProcessing`, `FundingSources`, `DataSourceURL`, `OtherDataSources`, `Citation`,   `Licence`, `Disclaimer`, `TopicCategoryCode`, `Keywords`, `CreateTimestamp`, `PublishedTimestamp`, `TemporalExtent`
-  - Filter By: `DOI`, `LocationId`, `ActivityMediaName`, `ActivityGroupType`, `CharacteristicName`, `MonitoringLocationType`, `ActivityStartYear`, `RegionId`, `DatasetName`, `CreateTimestamp`
+  - Filter By: `DOI`, `LocationId`, `ActivityMediaName`, `ActivityGroupType`, `CharacteristicName`, `MonitoringLocationType`, `ActivityStartYear`, `RegionId`, `Latitude`, `Longitude`, `DatasetName`, `CreateTimestamp`
   - `TemporalExtent` is the `["YYYY-MM-DD", "YYYY-MM-DD"]` range of activity start dates covered by the dataset. It is not filterable, but its years can bound `ActivityStartYear` filters on subsequent `/Locations`, `/Observations`, or `/Records` requests.
 
 - **GET /Locations**
   - Retrieves the location information that meets your query criteria.
   - Select By: `Id`, `DOI`, `ID` (Maps to `MonitoringLocationID` internally), `Name`, `Latitude`, `Longitude`, `HorizontalCoordinateReferenceSystem`, `HorizontalAccuracyMeasure`, `HorizontalAccuracyUnit`, `VerticalMeasure`, `VerticalUnit`, `MonitoringLocationType`
-  - Filter By: `DOI`, `LocationId`, `ActivityMediaName`, `ActivityGroupType`, `CharacteristicName`, `MonitoringLocationType`, `ActivityStartYear`, `RegionId`, `Name`
+  - Filter By: `DOI`, `LocationId`, `ActivityMediaName`, `ActivityGroupType`, `CharacteristicName`, `MonitoringLocationType`, `ActivityStartYear`, `RegionId`, `Latitude`, `Longitude`, `Name`
 
 - **GET /Observations**
   - Retrieves the observations that meet your query criteria. 
@@ -147,7 +150,7 @@ OData accepts certain query parameters. The ones supported by this API are:
       - Countries: `admin.2.{ca}`
       - Provinces/Territories/States: `admin.4.ca.{ab,bc,mb,nb,nl,ns,nt,nu,on,pe,qc,sk,yt}`
     - Bounding box `$filter=Longitude gt '-102.01' and Longitude lt '-88.99' and Latitude gt '49' and Latitude lt '60'`
-  <!-- - Functions: `$filter=contains(DOI, 'xxxx')`, `$filter=startwith(DOI, 'xxxx')`, `$filter=endswith(DOI, 'xxxx-xxxx')` -->
+  <!-- - Functions: `$filter=startswith(DOI, 'xxxx')`, `$filter=endswith(DOI, 'xx00')`, `$filter=substringof(DatasetName, 'Lake')` -->
 - **$top**
   - Maximum: 10000
   - Example: `$top=10`
