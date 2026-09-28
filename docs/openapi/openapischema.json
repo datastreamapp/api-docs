@@ -161,10 +161,12 @@
             }
           },
           "400": {
-            "description": "Bad request - invalid query (unknown $select/$filter field, malformed expression, or unencoded reserved characters such as $ in parameter names)"
+            "description": "Bad request - invalid query (unknown query parameter, unknown $select/$filter field, an operator the field does not accept, malformed expression, or unencoded reserved characters such as $ in parameter names)"
           },
           "401": { "description": "Missing API key" },
-          "403": { "description": "Invalid API key" },
+          "403": {
+            "description": "Forbidden - API key not recognized, or the request was denied before reaching the API, which returns a non-JSON body (a URL over roughly 2KB, usually a long in (...) list - split it across requests; no User-Agent header; or a path outside the documented endpoints)"
+          },
           "408": {
             "description": "Request timed out (30s) - retry once; if it persists, lower $top and/or add narrower filters"
           },
@@ -298,10 +300,12 @@
             }
           },
           "400": {
-            "description": "Bad request - invalid query (unknown $select/$filter field, malformed expression, or unencoded reserved characters such as $ in parameter names)"
+            "description": "Bad request - invalid query (unknown query parameter, unknown $select/$filter field, an operator the field does not accept, malformed expression, or unencoded reserved characters such as $ in parameter names)"
           },
           "401": { "description": "Missing API key" },
-          "403": { "description": "Invalid API key" },
+          "403": {
+            "description": "Forbidden - API key not recognized, or the request was denied before reaching the API, which returns a non-JSON body (a URL over roughly 2KB, usually a long in (...) list - split it across requests; no User-Agent header; or a path outside the documented endpoints)"
+          },
           "408": {
             "description": "Request timed out (30s) - retry once; if it persists, lower $top and/or add narrower filters"
           },
@@ -476,10 +480,12 @@
             }
           },
           "400": {
-            "description": "Bad request - invalid query (unknown $select/$filter field, malformed expression, or unencoded reserved characters such as $ in parameter names)"
+            "description": "Bad request - invalid query (unknown query parameter, unknown $select/$filter field, an operator the field does not accept, malformed expression, or unencoded reserved characters such as $ in parameter names)"
           },
           "401": { "description": "Missing API key" },
-          "403": { "description": "Invalid API key" },
+          "403": {
+            "description": "Forbidden - API key not recognized, or the request was denied before reaching the API, which returns a non-JSON body (a URL over roughly 2KB, usually a long in (...) list - split it across requests; no User-Agent header; or a path outside the documented endpoints)"
+          },
           "408": {
             "description": "Request timed out (30s) - retry once; if it persists, lower $top and/or add narrower filters"
           },
@@ -674,10 +680,12 @@
             }
           },
           "400": {
-            "description": "Bad request - invalid query (unknown $select/$filter field, malformed expression, or unencoded reserved characters such as $ in parameter names)"
+            "description": "Bad request - invalid query (unknown query parameter, unknown $select/$filter field, an operator the field does not accept, malformed expression, or unencoded reserved characters such as $ in parameter names)"
           },
           "401": { "description": "Missing API key" },
-          "403": { "description": "Invalid API key" },
+          "403": {
+            "description": "Forbidden - API key not recognized, or the request was denied before reaching the API, which returns a non-JSON body (a URL over roughly 2KB, usually a long in (...) list - split it across requests; no User-Agent header; or a path outside the documented endpoints)"
+          },
           "408": {
             "description": "Request timed out (30s) - retry once; if it persists, lower $top and/or add narrower filters"
           },

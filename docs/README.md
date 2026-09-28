@@ -126,7 +126,7 @@ The [specification itself](openapi/openapischema.json) is machine-readable.
 ```
 
 ### URL Parameters
-OData accepts certain query parameters. The ones supported by this API are:
+OData accepts certain query parameters. The ones supported by this API are listed below; unrecognized query parameters return `400 Bad Request`. Custom ordering isn't supported — results are always ordered by `Id`.
 - **$select**
   - Fields to be selected are entered comma delimited.
   - Example: `$select=DatasetName,Abstract`
@@ -142,6 +142,7 @@ OData accepts certain query parameters. The ones supported by this API are:
     - `in`: matches any value in a list
     - `and`: combines conditions, all of which must match
   - `lte` and `gte` are deprecated. Use `le` and `ge` instead.
+  - `gt`, `ge`, `lt` and `le` work only on year, coordinate and timestamp fields (`ActivityStartYear`, `Latitude`, `Longitude`, `CreateTimestamp`); on any other field they return `400 Bad Request`. The [API reference](https://datastreamapp.github.io/api-docs/) lists the operators each field accepts.
   - Grouping: `$filter=CharacteristicName eq 'Dissolved oxygen saturation'` or `$filter=DOI eq '10.25976/{suffix}'` where `{suffix}` is replaced with a value.
   - Temporal: `$filter=CreateTimestamp gt '2020-03-23' and CreateTimestamp lt '2020-03-25'`
   - Spatial: `$filter=RegionId eq 'hub.atlantic'`
@@ -162,22 +163,11 @@ OData accepts certain query parameters. The ones supported by this API are:
   - Return only the count for the request. When the value is large enough it becomes an estimate (~0.0005% accurate)
   - Example: `$count=true`
   - Default: `false`
-<!--
-- **$orderby**
-  - Fields to order by are entered comma delimited.
-  - Example: `$orderby=DatasetName,CreateTimestamp`
-- **$skip**
-  - Example: `$skip=10`
--->
 
 When building an integration with any API, it's important to encode all query string parameters.
 
 ### Performance Tips
 - Using `$select` to request only the parameters you need will decrease the amount of data needed to be transferred.
-<!--
-- Using large `$skip` values can be slow (it's a database thing), slicing your data by `GeometryId` and/or `CharacteristicName` will help prevent this.
-- Don't use `$orderby` unless you plan to pull a smaller number of results.
--->
 
 ## Examples
 
@@ -409,8 +399,11 @@ curl -G -H 'x-api-key: PRIVATE-API-KEY' \
 
 ## Errors
 
-### 400 Bad Request: `{"message":null}`
-This means your request was denied before reaching our service. This happens when the query string is not encoded properly. ie `$` -> `%24`.
+### 400 Bad Request
+This means your query couldn't be accepted. The response body shows which of two causes applies:
+
+- **A body with an `errors` list** means the API rejected the query: an unknown query parameter, an unknown `$select` or `$filter` field, an operator the field doesn't accept, or a malformed filter. An unknown parameter is named in `detail`. Most other rejections read `Event object failed validation`, with `cause` listing what failed; for an unknown field or operator, that includes where (`instancePath`) and the values allowed there (`params.allowedValues`).
+- **`{"message":null}`** means your request was denied before reaching our service. This happens when the query string is not encoded properly. ie `$` -> `%24`.
 
 ### 401 Unauthorized
 This means no API key was found on your request. Send your key in the `x-api-key` header. If you are sending a key and are still rejected, see `403 Forbidden` below.
