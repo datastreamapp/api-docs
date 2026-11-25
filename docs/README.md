@@ -160,7 +160,7 @@ OData accepts certain query parameters. The ones supported by this API are liste
   - Example: `$skiptoken=Id:1234`
   - For pagination, use `Link` header or `@odata.nextLink` in the JSON response body
 - **$count**
-  - Return only the count for the request. When the value is large enough it becomes an estimate (~0.0005% accurate)
+  - Return only the count for the request. When the value is large enough it becomes an estimate (accurate to within ~0.0005%)
   - Example: `$count=true`
   - Default: `false`
 
